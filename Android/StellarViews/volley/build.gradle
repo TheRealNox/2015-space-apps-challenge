@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.0'
+    }
+}
+apply plugin: 'android-library'
+android {
+    compileSdkVersion 19
+    buildToolsVersion '20.0.0'
+
+    sourceSets {
+
+        main {
+            assets.srcDirs = ['assets']
+            res.srcDirs = ['res']
+            aidl.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            java.srcDirs = ['src']
+            manifest.srcFile 'AndroidManifest.xml'
+
+        }
+
+        instrumentTest.setRoot('tests')
+        instrumentTest.java.srcDirs = ['tests/src']
+    }
+}
+
+dependencies {
+}
+
+
+
+task clearJar(type: Delete) {
+    delete 'build/outputs/volley.jar'
+}
+
+task makeJar(type: Copy) {
+    from('build/intermediates/bundles/release/')
+    into('build/outputs/')
+    include('classes.jar')
+    rename ('classes.jar', 'volley.jar')
+}
+
+makeJar.dependsOn(clearJar, build)
