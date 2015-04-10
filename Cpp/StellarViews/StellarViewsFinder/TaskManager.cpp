@@ -1,10 +1,9 @@
 #include "TaskManager.h"
 
-TaskManager::TaskManager(Model * model) :
+TaskManager::TaskManager() :
 _cmdsQueue(NULL),
 _queueLocker(NULL),
-_waitCondition(NULL),
-_model(model)
+_waitCondition(NULL)
 {
 	this->_continue = true;
 }
@@ -47,7 +46,7 @@ void					TaskManager::run()
 			this->_cmdsQueue->pop_front();
 			this->_queueLocker->unlock();
 			if (cmd != NULL)
-				this->_model->runCommands(cmd);
+				//run task here;
 			this->_queueLocker->lock();
 		}
 		this->_queueLocker->unlock();
