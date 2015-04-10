@@ -44,8 +44,7 @@ class UsersTable extends Table
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('id', 'create')
-            ->allowEmpty('username')
-            ->allowEmpty('password');
+            ->add('email_address', 'validFormat', ['rule' => 'email']);
 
         return $validator;
     }
@@ -59,7 +58,7 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['username']));
+        $rules->add($rules->isUnique(['email_address']));
         return $rules;
     }
 }
