@@ -30,8 +30,6 @@ class									Model : public QObject
 private:
 	DispatcherMapWithChar				_mainTaskDispatcher;
 	DispatcherMap						_internalTaskDispatcher;
-	DispatcherMap						_generalUITaskDispatcher;
-	DispatcherMapWithChar				_clipSettingsTaskDispatcher;
 
 	QList<BaseTask*>					_undoQueue;
 	QList<BaseTask*>					_redoQueue;
@@ -58,8 +56,6 @@ private:
 	BaseTask*						handleUndo(BaseTask*);
 	BaseTask*						handleRedo(BaseTask*);
 	BaseTask*						handleGroupOfCmd(BaseTask*);
-
-	BaseTask*						runGeneralUICmds(BaseTask*, char);
 	// --!Methods
 
 	// -- Slots & Signals

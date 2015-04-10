@@ -3,7 +3,6 @@
 Model::Model()
 {
 	this->_mainTaskDispatcher[InternalMask] = &Model::runInternalCmds;
-	this->_mainTaskDispatcher[GeneralUIMask] = &Model::runGeneralUICmds;
 	//this->_dispatchTaskMap[RenderMask] = &Model::runRenderCmds;
 	//this->_dispatchTaskMap[OtherMask] = &Model::runOtherCmds;
 
@@ -133,18 +132,6 @@ BaseTask *				Model::runInternalCmds(BaseTask * task, char unused)
 
 	if (this->_internalTaskDispatcher[cmdID] != NULL)
 		task = (this->*(_internalTaskDispatcher[cmdID]))(task);
-
-	return task;
-}
-
-BaseTask *				Model::runGeneralUICmds(BaseTask * task, char unused)
-{
-
-	Q_UNUSED(unused);
-	unsigned int	cmdID = (task->getCommand() & CMD_MASK);
-
-	if (this->_generalUITaskDispatcher[cmdID] != NULL)
-		task = (this->*(_generalUITaskDispatcher[cmdID]))(task);
 
 	return task;
 }
