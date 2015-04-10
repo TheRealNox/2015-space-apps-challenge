@@ -4,16 +4,22 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_StellarViewsFinder.h"
 
-class StellarViewsFinder : public QMainWindow
+#include "Controller.h"
+
+class							StellarViewsFinder : public QMainWindow
 {
 	Q_OBJECT
+
+private:
+	Ui::StellarViewsFinderClass _ui;
+
 
 public:
 	StellarViewsFinder(QWidget *parent = 0);
 	~StellarViewsFinder();
 
-private:
-	Ui::StellarViewsFinderClass ui;
+public:
+	void						plugController(Controller *);
 };
 
 #endif // STELLARVIEWSFINDER_H
