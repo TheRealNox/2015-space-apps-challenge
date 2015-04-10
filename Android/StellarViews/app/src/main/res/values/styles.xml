@@ -4,8 +4,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
         <!-- customize the color palette -->
-        <item name="colorPrimary">@color/material_indigo_500</item>
-        <item name="colorPrimaryDark">@color/material_indigo_700</item>
+        <item name="colorPrimary">@color/blue_nasa</item>
+        <item name="colorPrimaryDark">@color/blue_nasa_dark</item>
         <item name="colorAccent">@color/material_indigo_100</item>
 
         <!-- Customize your theme here. -->
