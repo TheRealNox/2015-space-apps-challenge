@@ -9,7 +9,6 @@
 #include <QWaitCondition>
 
 //Local includes
-#include "Model.h"
 #include "Task.hpp"
 
 class							TaskManager : public QObject
@@ -21,17 +20,15 @@ private:
 	QList<BaseTask*>*			_cmdsQueue;
 	QMutex *					_queueLocker;
 	QWaitCondition *			_waitCondition;
-	Model *						_model;
 	bool						_continue;
 	// --!Attributs
 
 	// -- CTors & DTor
 public:
-	TaskManager(Model*);
+	TaskManager();
 	~TaskManager();
 
 private:
-	TaskManager();
 	// --!CTors & DTor
 
 	// -- Methods

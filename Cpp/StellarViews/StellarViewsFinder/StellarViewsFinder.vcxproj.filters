@@ -53,17 +53,8 @@
     <ClCompile Include="RequestManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TaskManager.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Model.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Model.cpp">
-      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_TaskManager.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -90,9 +81,6 @@
     </CustomBuild>
     <CustomBuild Include="StellarViewsFinder.qrc">
       <Filter>Resource Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Model.h">
-      <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="TaskManager.h">
       <Filter>Header Files</Filter>

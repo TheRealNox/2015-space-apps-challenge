@@ -7,7 +7,6 @@
 #include <QWaitCondition>
 
 //Local includes
-#include "Model.h"
 #include "TaskManager.h"
 
 	class									Controller : public QObject
@@ -16,7 +15,6 @@
 
 		// -- Attributs
 	private:
-		Model *								_model;
 		QThread								_managerThread;
 		TaskManager *						_taskManager;
 
@@ -36,7 +34,6 @@
 
 		// -- Methods
 	public:
-		void								setModelAndConnectIt(Model*);
 		void								initializeAndStartTaskManager();
 
 	private:
