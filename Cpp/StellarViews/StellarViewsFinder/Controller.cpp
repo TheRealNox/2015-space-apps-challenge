@@ -1,6 +1,6 @@
 #include "Controller.h"
 
-Controller::Controller() : _model(NULL)
+Controller::Controller()
 {
 
 }
@@ -27,16 +27,9 @@ Controller::~Controller()
 		delete this->_waitCondition;
 }
 
-void						Controller::setModelAndConnectIt(Model* model)
-{
-	this->_model = model;
-
-	//From Model To View
-}
-
 void						Controller::initializeAndStartTaskManager()
 {
-	this->_taskManager = new TaskManager(this->_model);
+	this->_taskManager = new TaskManager();
 
 	this->_cmdsQueue = new QList<BaseTask*>;
 	this->_queueLocker = new QMutex;
@@ -55,36 +48,19 @@ void						Controller::initializeAndStartTaskManager()
 
 void						Controller::sendTaskToModel(BaseTask * task)
 {
-	if (this->_model != NULL)
-	{
 		this->_queueLocker->lock();
 		this->_cmdsQueue->push_back(task);
 		this->_queueLocker->unlock();
 		this->_waitCondition->wakeAll();
-	}
 }
 
 //
 //Triggered from view
 //
-void						Controller::undoTriggered()
-{
-	this->sendTaskToModel(new BaseTask(InternalMask | Undo));
-}
 
-void						Controller::redoTriggered()
+void						Controller::getFireTileRequest(GetFireTileRequest * toAdd)
 {
-	this->sendTaskToModel(new BaseTask(InternalMask | Redo));
-}
-
-void						Controller::groupOfCommandsTriggered(bool beginning)
-{
-	this->sendTaskToModel(new BaseTask(InternalMask | (beginning ? BeginGroupOfCmds : EndGroupOfCmds)));
-}
-
-void						Controller::shotToBeAddedToShotList(QString toAdd, bool toCheck)
-{
-	this->sendTaskToModel(new Task<QString>((toCheck ? (GeneralUIMask | PushAssetToShotListWithCheck) : (GeneralUIMask | PushAssetToShotListWithoutCheck)), toAdd));
+	this->sendTaskToModel(new Task<GetFireTileRequest *>((RequestMask | FireTileRequest), toAdd));
 }
 
 
