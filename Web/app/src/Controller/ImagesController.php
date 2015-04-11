@@ -47,14 +47,15 @@ class ImagesController extends AppController
             'all', [
                 'conditions' => $conditions,
                 'limit' => $limit,
-                'order' => 'id DESC'
+                'order' => 'Images.id DESC',
+                'contain' => ['ImageDetails']
             ]
         );
 
         foreach ($images as $image) {
-            $date = new Time($image['date_taken']);
+            $date = new Time($image->date_taken);
             $date = $date->i18nFormat('YYYY-MM-dd');
-            $image->url = $this->generateUrl($date, $image['tile_x'], $image['tile_y']);
+            $image->url = $this->generateUrl($date, $image->image_detail->tile_x, $image->image_detail->tile_y);
         }
 
         $success = true;

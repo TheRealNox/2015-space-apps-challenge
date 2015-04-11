@@ -28,9 +28,6 @@ class ImagesTable extends Table
         $this->hasMany('Ratings', [
             'foreignKey' => 'image_id'
         ]);
-        $this->belongsTo('ImageCollections', [
-            'foreignKey' => 'image_collection_id'
-        ]);
         $this->belongsTo('ImageDetails', [
             'foreignKey' => 'image_detail_id'
         ]);
@@ -60,7 +57,7 @@ class ImagesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['image_collection_id'], 'ImageCollections'));
+        $rules->add($rules->existsIn(['image_detail_id'], 'ImageDetails'));
         return $rules;
     }
 }
