@@ -16,13 +16,12 @@ class Image extends Entity
      */
     protected $_accessible = [
         'image_collection_id' => true,
+        'image_detail_id' => true,
         'ratings' => true,
         'image_collections' => true,
-        'uuid' => true,
+        'image_details' => true,
         'unique_key' => true,
         'date_taken' => true,
-        'tile_x' => true,
-        'tile_y' => true,
         'created' => true,
         'modified' => true,
     ];

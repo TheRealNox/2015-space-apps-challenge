@@ -1,16 +1,16 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Image;
+use App\Model\Entity\ImageDetail;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Images Model
+ * ImageDetails Model
  */
-class ImagesTable extends Table
+class ImageDetailsTable extends Table
 {
 
     /**
@@ -21,17 +21,14 @@ class ImagesTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('images');
+        $this->table('image_details');
         $this->displayField('id');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
-        $this->hasMany('Ratings', [
-            'foreignKey' => 'image_id'
-        ]);
         $this->belongsTo('ImageCollections', [
             'foreignKey' => 'image_collection_id'
         ]);
-        $this->belongsTo('ImageDetails', [
+        $this->hasMany('Images', [
             'foreignKey' => 'image_detail_id'
         ]);
     }
@@ -46,7 +43,17 @@ class ImagesTable extends Table
     {
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
+            ->allowEmpty('id', 'create')
+            ->add('uuid', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('uuid')
+            ->add('lat', 'valid', ['rule' => 'decimal'])
+            ->allowEmpty('lat')
+            ->add('long', 'valid', ['rule' => 'decimal'])
+            ->allowEmpty('long')
+            ->add('tile_x', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('tile_x')
+            ->add('tile_y', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('tile_y');
 
         return $validator;
     }

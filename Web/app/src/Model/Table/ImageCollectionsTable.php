@@ -25,7 +25,7 @@ class ImageCollectionsTable extends Table
         $this->table('image_collections');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->hasMany('Images', [
+        $this->hasMany('ImageDetails', [
             'foreignKey' => 'image_collection_id'
         ]);
     }
