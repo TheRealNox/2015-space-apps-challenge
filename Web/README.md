@@ -73,3 +73,29 @@ Shows all ratings for the logged in user.
   ...
 ]
 ``
+
+### images
+``GET /api/images``
+
+Returns Images from data supplied by Orchestrate, Amount is determined by available data.
+
+**Parameters:**
+- (none)
+``
+{
+    "images": [
+        {
+            "id": 4,
+            "image_collection_id": 1,
+            "uuid": "12321321321321554641651511651",
+            "unique_key": "095b43c112204fee",
+            "date_taken": "2015-03-10T00:00:00+0000",
+            "tile_x": 26,
+            "tile_y": 125,
+            "created": "2015-04-11T06:06:24+0000",
+            "modified": "2015-04-11T06:06:24+0000",
+            "url": "https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=2015-03-10&Layer=MODIS_Terra_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=125&TileRow=26"
+        }
+    ]
+}
+``
