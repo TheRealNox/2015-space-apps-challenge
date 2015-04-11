@@ -17,7 +17,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->ApiAuth->allow(['login', 'register']);
+        $this->ApiAuth->allow(['login', 'register', 'refresh_auth_token']);
     }
 
     /**
