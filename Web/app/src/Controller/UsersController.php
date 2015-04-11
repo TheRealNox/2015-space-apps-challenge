@@ -68,7 +68,7 @@ class UsersController extends AppController
 
         $user = $this->Users->newEntity();
         $user = $this->Users->patchEntity($user, $this->request->data);
-        $errors = $user->errors();
+        $errors = (array)$user->errors();
         if (!$errors) {
             if ($this->Users->save($user)) {
                 $auth_token = $this->ApiAuth->login($user->email_address, $this->request->data('password'));

@@ -43,13 +43,16 @@ class RatingsController extends AppController
 
         $rows_total = count($data);
         $rows_saved = 0;
+        $errors = [];
 
         foreach ($data as $rating) {
             $rating['user_id'] = $this->ApiAuth->user('id');
             $newRating = $this->Ratings->newEntity();
             $newRating = $this->Ratings->patchEntity($newRating, $rating);
-            $errors = $newRating->errors();
-            if (!$errors) {
+            $rErrors = (array)$newRating->errors();
+            if ($rErrors) {
+                $errors[] = $rErrors;
+            } else {
                 if ($this->Ratings->save($rating)) {
                     $rows_saved++;
                 }
