@@ -47,6 +47,9 @@ class RatingsController extends AppController
         $imageIds = [];
 
         foreach ($data as $rating) {
+            if (!isset($rating['image_id'], $rating['is_interesting'])) {
+                continue;
+            }
             if (!in_array($rating['image_id'], $imageIds) && $rating['is_interesting']) {
                 $imageIds[] = $rating['image_id'];
             }
