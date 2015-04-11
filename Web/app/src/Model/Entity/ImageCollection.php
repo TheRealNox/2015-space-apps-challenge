@@ -4,9 +4,9 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * ImageCategory Entity.
+ * ImageCollection Entity.
  */
-class ImageCategory extends Entity
+class ImageCollection extends Entity
 {
 
     /**
@@ -17,6 +17,6 @@ class ImageCategory extends Entity
     protected $_accessible = [
         'title' => true,
         'sort_order' => true,
-        'ratings' => true,
+        'images' => true,
     ];
 }

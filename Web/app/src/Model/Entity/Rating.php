@@ -18,10 +18,8 @@ class Rating extends Entity
         'user_id' => true,
         'image_id' => true,
         'is_interesting' => true,
-        'image_category_id' => true,
         'note' => true,
         'user' => true,
         'image' => true,
-        'image_category' => true,
     ];
 }

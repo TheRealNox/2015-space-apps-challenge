@@ -1,14 +1,14 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\ImageCategoriesTable;
+use App\Model\Table\ImageCollectionsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\ImageCategoriesTable Test Case
+ * App\Model\Table\ImageCollectionsTable Test Case
  */
-class ImageCategoriesTableTest extends TestCase
+class ImageCollectionsTableTest extends TestCase
 {
 
     /**
@@ -17,11 +17,11 @@ class ImageCategoriesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'ImageCategories' => 'app.image_categories',
+        'ImageCollections' => 'app.image_collections',
+        'Images' => 'app.images',
         'Ratings' => 'app.ratings',
         'Users' => 'app.users',
-        'UserAuthTokens' => 'app.user_auth_tokens',
-        'Images' => 'app.images'
+        'UserAuthTokens' => 'app.user_auth_tokens'
     ];
 
     /**
@@ -32,8 +32,8 @@ class ImageCategoriesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('ImageCategories') ? [] : ['className' => 'App\Model\Table\ImageCategoriesTable'];
-        $this->ImageCategories = TableRegistry::get('ImageCategories', $config);
+        $config = TableRegistry::exists('ImageCollections') ? [] : ['className' => 'App\Model\Table\ImageCollectionsTable'];
+        $this->ImageCollections = TableRegistry::get('ImageCollections', $config);
     }
 
     /**
@@ -43,7 +43,7 @@ class ImageCategoriesTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->ImageCategories);
+        unset($this->ImageCollections);
 
         parent::tearDown();
     }

@@ -15,6 +15,8 @@ class Image extends Entity
      * @var array
      */
     protected $_accessible = [
+        'image_collection_id' => true,
         'ratings' => true,
+        'image_collections' => true,
     ];
 }

@@ -27,6 +27,9 @@ class ImagesTable extends Table
         $this->hasMany('Ratings', [
             'foreignKey' => 'image_id'
         ]);
+        $this->belongsTo('ImageCollections', [
+            'foreignKey' => 'image_collection_id'
+        ]);
     }
 
     /**
@@ -42,5 +45,18 @@ class ImagesTable extends Table
             ->allowEmpty('id', 'create');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['image_collection_id'], 'ImageCollections'));
+        return $rules;
     }
 }

@@ -31,9 +31,6 @@ class RatingsTable extends Table
         $this->belongsTo('Images', [
             'foreignKey' => 'image_id'
         ]);
-        $this->belongsTo('ImageCategories', [
-            'foreignKey' => 'image_category_id'
-        ]);
     }
 
     /**
@@ -65,7 +62,6 @@ class RatingsTable extends Table
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['image_id'], 'Images'));
-        $rules->add($rules->existsIn(['image_category_id'], 'ImageCategories'));
         return $rules;
     }
 

@@ -1,16 +1,16 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\ImageCategory;
+use App\Model\Entity\ImageCollection;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * ImageCategories Model
+ * ImageCollections Model
  */
-class ImageCategoriesTable extends Table
+class ImageCollectionsTable extends Table
 {
 
     /**
@@ -21,11 +21,11 @@ class ImageCategoriesTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('image_categories');
+        $this->table('image_collections');
         $this->displayField('title');
         $this->primaryKey('id');
-        $this->hasMany('Ratings', [
-            'foreignKey' => 'image_category_id'
+        $this->hasMany('Images', [
+            'foreignKey' => 'image_collection_id'
         ]);
     }
 
