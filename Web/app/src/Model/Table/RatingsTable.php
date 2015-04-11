@@ -68,4 +68,23 @@ class RatingsTable extends Table
         $rules->add($rules->existsIn(['image_category_id'], 'ImageCategories'));
         return $rules;
     }
+
+    /**
+     * @param $user_id
+     */
+    public function getImageIdsByUserId($user_id)
+    {
+        $ratings = $this->find(
+            'all', [
+                'conditions' => [
+                    'user_id' => $user_id
+                ],
+                'fields' => [
+                    'image_id'
+                ]
+            ]
+        )->extract('image_id')->toArray();
+
+        return $ratings;
+    }
 }

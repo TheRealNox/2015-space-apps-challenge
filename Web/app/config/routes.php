@@ -72,6 +72,10 @@ Router::scope('/api', function ($routes) {
         'only' => ['add', 'index']
     ]);
 
+    $routes->resources('Images', [
+        'only' => ['index']
+    ]);
+
     $routes->fallbacks('InflectedRoute');
 });
 
