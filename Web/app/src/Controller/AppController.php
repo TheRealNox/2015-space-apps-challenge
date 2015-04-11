@@ -39,4 +39,11 @@ class AppController extends Controller
         $this->loadComponent('ApiAuth');
         $this->loadComponent('RequestHandler');
     }
+
+    public function beforeFilter()
+    {
+        $empty = [];
+        $this->set(compact('empty'));
+        $this->set('_serialize', array('empty'));
+    }
 }
