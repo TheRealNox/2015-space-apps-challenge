@@ -41,6 +41,9 @@ class ApiAuthComponent extends Component
      */
     protected $controller;
 
+    /**
+     * @return bool
+     */
     protected function _isAllowed()
     {
         if ($this->allowAll) {
@@ -53,16 +56,25 @@ class ApiAuthComponent extends Component
         return false;
     }
 
+    /**
+     * @throws ForbiddenException
+     */
     protected function _unauthenticated()
     {
         throw new ForbiddenException();
     }
 
+    /**
+     * @param $controller
+     */
     public function setController($controller)
     {
         $this->controller = $controller;
     }
 
+    /**
+     * @param null $actions
+     */
     public function allow($actions = null)
     {
         if ($actions === null) {
@@ -72,6 +84,9 @@ class ApiAuthComponent extends Component
         $this->allowedActions = array_merge($this->allowedActions, (array)$actions);
     }
 
+    /**
+     * @param Event $event
+     */
     public function startup(Event $event)
     {
         $this->setController($event->subject());
@@ -93,6 +108,9 @@ class ApiAuthComponent extends Component
         return $this->_unauthenticated();
     }
 
+    /**
+     * @return $this|mixed|null
+     */
     protected function getToken()
     {
         $token = null;
@@ -110,6 +128,9 @@ class ApiAuthComponent extends Component
         return $token;
     }
 
+    /**
+     * @return bool
+     */
     public function isLoggedIn()
     {
         static $results = [];
@@ -150,6 +171,11 @@ class ApiAuthComponent extends Component
         return $result;
     }
 
+    /**
+     * @param string $username
+     * @param string $password
+     * @return bool
+     */
     public function login($username, $password)
     {
         $users = TableRegistry::get('Users');
@@ -180,6 +206,9 @@ class ApiAuthComponent extends Component
         return $userAuthToken['token'];
     }
 
+    /**
+     * @param $user
+     */
     protected function setCurrentUser($user)
     {
         if (isset($user['password'])) {
@@ -188,6 +217,10 @@ class ApiAuthComponent extends Component
         $this->currentUser = $user;
     }
 
+    /**
+     * @param null $key
+     * @return array|bool
+     */
     public function user($key = null)
     {
         if (!$this->isLoggedIn()) {
@@ -200,6 +233,9 @@ class ApiAuthComponent extends Component
         return $this->currentUser;
     }
 
+    /**
+     * @return string
+     */
     protected function generateToken()
     {
         $token = openssl_random_pseudo_bytes(128);
