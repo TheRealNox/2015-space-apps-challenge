@@ -18,5 +18,12 @@ class Image extends Entity
         'image_collection_id' => true,
         'ratings' => true,
         'image_collections' => true,
+        'uuid' => true,
+        'unique_key' => true,
+        'date_taken' => true,
+        'tile_x' => true,
+        'tile_y' => true,
+        'created' => true,
+        'modified' => true,
     ];
 }
