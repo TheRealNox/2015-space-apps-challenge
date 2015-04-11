@@ -125,10 +125,12 @@ class ApiAuthComponent extends Component
         }
 
         $userAuthTokens = TableRegistry::get('UserAuthTokens');
-        $userAuthToken = $userAuthTokens->find()->where([
+        $users = TableRegistry::get('Users');
+        $conditions = [
             'token' => $token,
-            'expires < NOW()'
-        ])->first();
+            'expires > NOW()'
+        ];
+        $userAuthToken = $userAuthTokens->find()->where($conditions)->first();
 
         // Logged in
         if ($userAuthToken) {
