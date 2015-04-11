@@ -22,7 +22,7 @@ class ImageImportShell extends Shell
         for ($n = 0; true; $n += self::BATCH_SIZE) {
 
             $searchOp = new SearchOperation('discovery', self::BATCH_SIZE, $n);
-            $searchResult = $client->execute($searchOp)->getValue();
+            $searchResult = $client->execute($searchOp);
 
             if (!$searchResult->count()) {
                 break;
@@ -31,7 +31,7 @@ class ImageImportShell extends Shell
             $imageCollections = TableRegistry::get('ImageCollections');
             $collections = $imageCollections->find('list')->toArray();
 
-            foreach ($searchResult['results'] as $result) {
+            foreach ($searchResult->getValue()['results'] as $result) {
                 $exists = $images->find('all', ['conditions' => ['unique_key' => $result['path']['key']]])->first();
                 if ($exists) {
                     continue;
