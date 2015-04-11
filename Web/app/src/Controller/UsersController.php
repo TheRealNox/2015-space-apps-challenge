@@ -18,8 +18,6 @@ class UsersController extends AppController
     {
         parent::beforeFilter($event);
         $this->ApiAuth->allow(['login', 'register']);
-        //$this->autoRender = false;
-
     }
 
     /**
@@ -79,7 +77,6 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $token = $this->ApiAuth->login($user->email_address, $this->request->data('password'));
                 if ($token) {
-                    var_dump($token);
                     $success = true;
                 }
             }
