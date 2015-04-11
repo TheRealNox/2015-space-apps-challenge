@@ -6,6 +6,7 @@ use Cake\Controller\Component;
 use Cake\Event\Event;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
 
 /**
  * A simpler version of the AuthComponent
@@ -16,6 +17,7 @@ use Cake\ORM\TableRegistry;
 class ApiAuthComponent extends Component
 {
     const TOKEN_PARAM = 'auth_token';
+    const TOKEN_EXPIRY = '+7 days';
     const USERNAME_FIELD = 'email_address';
     const PASSWORD_FIELD = 'password';
 
@@ -160,10 +162,13 @@ class ApiAuthComponent extends Component
         }
 
         $this->setCurrentUser($user);
+        $expires = Time::now();
+        $expires->modify(self::TOKEN_EXPIRY);
 
         $data = [
             'user_id' => $user->id,
-            'token' => $this->generateToken()
+            'token' => $this->generateToken(),
+            'expires' => $expires
         ];
 
         $userAuthTokens = TableRegistry::get('UserAuthTokens');
@@ -193,10 +198,10 @@ class ApiAuthComponent extends Component
         return $this->currentUser;
     }
 
-    protected function generateToken($len = 128)
+    protected function generateToken()
     {
-        $token = openssl_random_pseudo_bytes($len / 2);
+        $token = openssl_random_pseudo_bytes(128);
         $token = bin2hex($token);
-        return $token;
+        return hash('whirlpool', $token);
     }
 }
