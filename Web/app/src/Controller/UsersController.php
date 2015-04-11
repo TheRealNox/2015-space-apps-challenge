@@ -39,20 +39,17 @@ class UsersController extends AppController
         $emailAddress = $this->request->data('email_address');
         $password = $this->request->data('password');
 
-        $token = $this->ApiAuth->login($emailAddress, $password);
+        $auth_token = $this->ApiAuth->login($emailAddress, $password);
 
         // Login failure
-        if ($token === false) {
+        if ($auth_token === false) {
             throw new UnauthorizedException();
         }
 
-        $response = [
-            'token' => $token,
-            'success' => true
-        ];
+        $success = true;
 
-        $this->set(compact('response'));
-        $this->set('_serialize', ['response']);
+        $this->set(compact('auth_token', 'success'));
+        $this->set('_serialize', ['auth_token', 'success']);
     }
 
     /**
@@ -66,7 +63,7 @@ class UsersController extends AppController
             throw new BadRequestException();
         }
 
-        $token = null;
+        $auth_token = null;
         $errors = null;
         $success = false;
 
@@ -75,14 +72,14 @@ class UsersController extends AppController
         $errors = $user->errors();
         if (!$errors) {
             if ($this->Users->save($user)) {
-                $token = $this->ApiAuth->login($user->email_address, $this->request->data('password'));
-                if ($token) {
+                $auth_token = $this->ApiAuth->login($user->email_address, $this->request->data('password'));
+                if ($auth_token) {
                     $success = true;
                 }
             }
         }
 
-        $this->set(compact('token', 'errors', 'success'));
+        $this->set(compact('auth_token', 'errors', 'success'));
         $this->set('_serialize', ['token', 'errors', 'success']);
     }
 }
