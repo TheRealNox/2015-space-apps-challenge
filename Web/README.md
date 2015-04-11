@@ -75,7 +75,7 @@ Shows all ratings for the logged in user.
 ``
 
 ### images
-``GET /api/images``
+``GET /api/images?auth_token={auth-token}``
 
 Returns Images from data supplied by Orchestrate, Amount is determined by available data.
 
