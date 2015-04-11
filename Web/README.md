@@ -17,20 +17,33 @@ The currently implemented methods are below:
 ### users/register
 ``POST /api/users/register``
 
-Registers a new user.
+Registers a new user. Supplies an auth_token which can be used in subsequent requests.
 
 **Parameters:**
 - email_address
 - password
+
+**Returns:**
+[
+  errors: [],
+  auth_token: "blah blah blah",
+  success: true
+]
 
 ### users/login
 ``POST /api/users/login``
 
-Logs a user in.
+Logs a user in. Supplies an auth_token which can be used in subsequent requests.
 
 **Parameters:**
 - email_address
 - password
+
+**Returns:**
+[
+  auth_token: "blah blah blah",
+  success: true
+]
 
 ### ratings
 ``GET /api/users/login``
@@ -39,3 +52,18 @@ Shows all ratings for the logged in user.
 
 **Parameters:**
 - (none)
+
+**Returns:**
+[
+  [
+    id: 123,
+    user_id: 123,
+    image_id: 123,
+    is_interesting: 1,
+    image_category_id: 0,
+    note: "space ftw",
+    created: "2015-04-11 00:39:54",
+    updated: "2015-04-11 00:39:54"
+  ],
+  ...
+]
