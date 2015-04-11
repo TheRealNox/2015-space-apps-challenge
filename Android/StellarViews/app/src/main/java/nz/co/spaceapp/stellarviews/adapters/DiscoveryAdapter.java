@@ -1,19 +1,20 @@
-package nz.co.spaceapp.stellarviews.explore;
+package nz.co.spaceapp.stellarviews.adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 
-import nz.co.spaceapp.library.view.DropShadowImageView;
+import nz.co.spaceapp.library.image.ImageManager;
+import nz.co.spaceapp.library.view.SquareNetworkImageView;
 import nz.co.spaceapp.stellarviews.Discovery;
 import nz.co.spaceapp.stellarviews.R;
 
@@ -28,12 +29,12 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView image;
+        public SquareNetworkImageView discovery;
 
         public ViewHolder(View v) {
             super(v);
 
-            image = (ImageView) v.findViewById(R.id.image);
+            discovery = (SquareNetworkImageView) v.findViewById(R.id.discovery);
         }
     }
 
@@ -47,15 +48,15 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewStyle) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_discovery, parent, false);
 
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        Discovery discoveries = mDiscoveries.get(position);
+    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
+        final Discovery discovery = mDiscoveries.get(position);
 
-//        viewHolder.vendor.setText(beacon.getVendor());
+        viewHolder.discovery.setDefaultImageResId(R.mipmap.default_discovery);
+        viewHolder.discovery.setImageUrl(discovery.getUrl(), ImageManager.getInstance().getImageLoader());
     }
 
     @Override

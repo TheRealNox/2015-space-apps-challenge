@@ -6,4 +6,5 @@
     <color name="blue_nasa">#0B3D91</color>
     <color name="blue_nasa_dark">#BB0B0B64</color>
     <color name="black_transparent">#AA000000</color>
+    <color name="grey_transparent">#40000000</color>
 </resources>
