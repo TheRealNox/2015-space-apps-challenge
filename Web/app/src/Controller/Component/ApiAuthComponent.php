@@ -131,7 +131,7 @@ class ApiAuthComponent extends Component
     /**
      * @return bool
      */
-    public function isLoggedIn($cache = true, $expiry = true)
+    public function isLoggedIn($cache = true, $expiry = null)
     {
         static $results = [];
         $token = $this->getToken();
@@ -152,8 +152,13 @@ class ApiAuthComponent extends Component
         $conditions = [
             'token' => $token,
         ];
-        if ($expiry) {
+        if ($expiry === null) {
             $conditions[] = 'expires > NOW()';
+        } else if (strlen($expiry) > 0) {
+            $expires = Time::now();
+            $expires->modify(self::TOKEN_EXPIRY);
+            $expires->modify($expiry);
+            $conditions['expires > '] = $expires;
         }
         $userAuthToken = $userAuthTokens->find()->where($conditions)->first();
 
@@ -247,7 +252,7 @@ class ApiAuthComponent extends Component
     {
         if ($this->isLoggedIn()) {
             return true;
-        } else if ($this->isLoggedIn(false, false)) {
+        } else if ($this->isLoggedIn(false, '+1 day')) {
             return $this->createToken();
         }
         return false;
