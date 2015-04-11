@@ -35,7 +35,11 @@ class RatingsController extends AppController
         $imageCategories = $this->Ratings->ImageCategories->find('list', ['limit' => 200]);
         $this->set(compact('rating', 'users', 'images', 'imageCategories'));
         $this->set('_serialize', ['rating']);
-        return($this);
+    }
+
+    public function index()
+    {
+
     }
 
 

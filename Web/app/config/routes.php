@@ -68,6 +68,10 @@ Router::scope('/api', function ($routes) {
         ]
     ]);
 
+    $routes->resources('Ratings', [
+        'only' => ['add', 'index']
+    ]);
+
     $routes->fallbacks('InflectedRoute');
 });
 
