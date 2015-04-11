@@ -17,14 +17,14 @@ class ImageImportShell extends Shell
     {
         $client = new Client(Configure::read('Orchestrate.api_key'));
 
+        $images = TableRegistry::get('Images');
+
         for ($n = 0; true; $n += self::BATCH_SIZE) {
 
             $searchOp = new SearchOperation('discovery', self::BATCH_SIZE, $n);
             $searchResult = $client->execute($searchOp)->getValue();
 
-            $images = TableRegistry::get('Images');
-
-            if (!$images->count()) {
+            if (!$searchResult->count()) {
                 break;
             }
 
