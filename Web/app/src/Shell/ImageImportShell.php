@@ -20,9 +20,17 @@ class ImageImportShell extends Shell
 
         $images = TableRegistry::get('Images');
 
+        $imageCollections = TableRegistry::get('ImageCollections');
+        $collections = $imageCollections->find('list')->toArray();
+
         foreach ($searchResult['results'] as $result) {
+            $exists = $images->find('all', ['conditions' => ['unique_key' => $result['path']['key']]])->first();
+            if ($exists) {
+                continue;
+            }
+
             $data = [
-                //'image_collection_id' => '',
+                'image_collection_id' => (int)array_search($result['value']['Category'], $collections, true),
                 'uuid' => $result['value']['CoordinateUUID'],
                 'unique_key' => $result['path']['key'],
                 'date_taken' => $result['value']['Time'],

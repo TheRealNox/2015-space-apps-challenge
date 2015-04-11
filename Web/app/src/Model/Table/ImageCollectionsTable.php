@@ -21,6 +21,7 @@ class ImageCollectionsTable extends Table
      */
     public function initialize(array $config)
     {
+        $this->addBehavior('Timestamp');
         $this->table('image_collections');
         $this->displayField('title');
         $this->primaryKey('id');

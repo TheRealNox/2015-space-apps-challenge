@@ -24,6 +24,7 @@ class ImagesTable extends Table
         $this->table('images');
         $this->displayField('id');
         $this->primaryKey('id');
+        $this->addBehavior('Timestamp');
         $this->hasMany('Ratings', [
             'foreignKey' => 'image_id'
         ]);
