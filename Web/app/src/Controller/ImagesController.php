@@ -24,7 +24,7 @@ class ImagesController extends AppController
         if (!$limit || $limit > 100 || $limit < 1) {
             $limit = 20;
         }
-        $exclude = explode('', (string)$this->request->param('exclude'));
+        $exclude = explode(',', (string)$this->request->param('exclude'));
         if (!is_array($exclude)) {
             $exclude = [];
         }
@@ -43,7 +43,14 @@ class ImagesController extends AppController
             $conditions['id NOT IN'] = $excludeIds;
         }
 
-        $images = $this->Images->find('all', ['conditions' => $conditions, 'limit' => $limit, 'orderby' => 'id']);
+        $images = $this->Images->find(
+            'all', [
+                'conditions' => $conditions,
+                'limit' => $limit,
+                'orderby' => 'id',
+                'order' => 'DESC'
+            ]
+        );
 
         foreach ($images as $image) {
             $date = new Time($image['date_taken']);
