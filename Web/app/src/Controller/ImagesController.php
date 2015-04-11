@@ -47,8 +47,7 @@ class ImagesController extends AppController
             'all', [
                 'conditions' => $conditions,
                 'limit' => $limit,
-                'orderby' => 'id',
-                'order' => 'DESC'
+                'order' => 'id DESC'
             ]
         );
 
