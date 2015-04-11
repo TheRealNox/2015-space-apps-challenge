@@ -81,7 +81,7 @@ Returns Images from data supplied by Orchestrate, Amount is determined by availa
 
 **Parameters:**
 - (none)
-- 
+
 ``
 {
     "images": [
