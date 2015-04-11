@@ -18,7 +18,6 @@ class ApiAuthComponent extends Component
     const TOKEN_PARAM = 'auth_token';
     const USERNAME_FIELD = 'email_address';
     const PASSWORD_FIELD = 'password';
-    const PASSWORD_HASH = 'whirlpool';
 
     /**
      * @var array
@@ -150,10 +149,11 @@ class ApiAuthComponent extends Component
     public function login($username, $password)
     {
         $users = TableRegistry::get('Users');
-        $user = $users->find()->where([
+        $conditions = [
             self::USERNAME_FIELD => $username,
-            self::PASSWORD_FIELD => $this->hashPassword($password)
-        ])->first();
+            self::PASSWORD_FIELD => $users->hashPassword($password)
+        ];
+        $user = $users->find()->where($conditions)->first();
 
         if (!$user) {
             return false;
@@ -198,10 +198,5 @@ class ApiAuthComponent extends Component
         $token = openssl_random_pseudo_bytes($len / 2);
         $token = bin2hex($token);
         return $token;
-    }
-
-    protected function hashPassword($password)
-    {
-        return hash(self::PASSWORD_HASH, $password);
     }
 }

@@ -14,13 +14,6 @@ use Cake\Network\Exception\UnauthorizedException;
  */
 class UsersController extends AppController
 {
-    public function initialize()
-    {
-        parent::initialize();
-        $this->loadComponent('ApiAuth');
-        $this->loadComponent('RequestHandler');
-    }
-
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
@@ -76,23 +69,23 @@ class UsersController extends AppController
         }
 
         $token = null;
-        $message = null;
+        $errors = null;
         $success = false;
 
         $user = $this->Users->newEntity();
         $user = $this->Users->patchEntity($user, $this->request->data);
-        if ($user->errors()) {
-            var_dump($user->errors());
-            die();
-        }
-        if ($this->Users->save($user)) {
-            $token = $this->ApiAuth->login($user->email_address, $user->password);
-            if ($token) {
-                $success = true;
+        $errors = $user->errors();
+        if (!$errors) {
+            if ($this->Users->save($user)) {
+                $token = $this->ApiAuth->login($user->email_address, $this->request->data('password'));
+                if ($token) {
+                    var_dump($token);
+                    $success = true;
+                }
             }
         }
 
-        $this->set(compact('token', 'message', 'success'));
-        $this->set('_serialize', ['token', 'message', 'success']);
+        $this->set(compact('token', 'errors', 'success'));
+        $this->set('_serialize', ['token', 'errors', 'success']);
     }
 }

@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  */
 class UsersTable extends Table
 {
+    const PASSWORD_HASH = 'whirlpool';
 
     /**
      * Initialize method
@@ -44,7 +45,10 @@ class UsersTable extends Table
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('id', 'create')
-            ->add('email_address', 'validFormat', ['rule' => 'email']);
+            ->add('email_address', 'validFormat', ['rule' => 'email'])
+            ->requirePresence('email_address', true)
+            ->requirePresence('password', true);
+
 
         return $validator;
     }
@@ -60,5 +64,19 @@ class UsersTable extends Table
     {
         $rules->add($rules->isUnique(['email_address']));
         return $rules;
+    }
+
+    public function beforeSave($event, $user, $options)
+    {
+        /*if (!$user->isNew() && $user->has('password') && empty($user->password)) {
+            $user->unsetProperty('password');
+        } else {
+            $user->password = $this->hashPassword($user->password);
+        }*/
+    }
+
+    public function hashPassword($password)
+    {
+        return hash(self::PASSWORD_HASH, $password);
     }
 }
