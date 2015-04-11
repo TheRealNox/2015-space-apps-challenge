@@ -16,27 +16,6 @@ class RatingsController extends AppController
      *
      * @return void
      */
-
-
-    public function add()
-    {
-        $rating = $this->Ratings->newEntity();
-        if ($this->request->is('post')) {
-            $rating = $this->Ratings->patchEntity($rating, $this->request->data);
-            if ($this->Ratings->save($rating)) {
-                $this->Flash->success('The rating has been saved.');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error('The rating could not be saved. Please, try again.');
-            }
-        }
-        $users = $this->Ratings->Users->find('list', ['limit' => 200]);
-        $images = $this->Ratings->Images->find('list', ['limit' => 200]);
-        $imageCategories = $this->Ratings->ImageCategories->find('list', ['limit' => 200]);
-        $this->set(compact('rating', 'users', 'images', 'imageCategories'));
-        $this->set('_serialize', ['rating']);
-    }
-
     public function index()
     {
         $ratings = $this->Ratings->find('all', [
@@ -49,7 +28,37 @@ class RatingsController extends AppController
         $this->set('_serialize', ['ratings']);
     }
 
+    /**
+     * Add method
+     *
+     * @return void
+     */
+    public function add()
+    {
+        $data = $this->request->data;
 
+        if (isset($data['image_id'])) {
+            $data = [$data];
+        }
 
+        $rows_total = count($data);
+        $rows_saved = 0;
 
+        foreach ($data as $rating) {
+            $rating['user_id'] = $this->ApiAuth->user('id');
+            $newRating = $this->Ratings->newEntity();
+            $newRating = $this->Ratings->patchEntity($newRating, $rating);
+            $errors = $newRating->errors();
+            if (!$errors) {
+                if ($this->Ratings->save($rating)) {
+                    $rows_saved++;
+                }
+            }
+        }
+
+        $success = ($rows_total === $rows_saved);
+
+        $this->set(compact('errors', 'success', 'rows_total', 'rows_saved'));
+        $this->set('_serialize', ['errors', 'success', 'rows_total', 'rows_saved']);
+    }
 }

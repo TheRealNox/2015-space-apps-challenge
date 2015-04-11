@@ -64,7 +64,6 @@ class UsersController extends AppController
         }
 
         $auth_token = null;
-        $errors = null;
         $success = false;
 
         $user = $this->Users->newEntity();
