@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 
+use Cake\I18n\Time;
+
 /**
  * Images Controller
  *
@@ -27,11 +29,10 @@ class ImagesController extends AppController
 
         $images = $this->Images->find('all', ['conditions' => $conditions]);
 
-        foreach ($images as &$image) {
-            $image['url'] = $this->generateUrl($image['date_taken'], $image['tile_x'], $image['tile_y']);
-        }
-        if (isset($image)) {
-            unset($image);
+        foreach ($images as $image) {
+            $date = new Time($image['date_taken']);
+            $date = $date->i18nFormat('YYYY-MM-dd');
+            $image->url = $this->generateUrl($date, $image['tile_x'], $image['tile_y']);
         }
 
         $this->set(compact('images'));
