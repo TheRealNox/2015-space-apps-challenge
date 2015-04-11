@@ -24,12 +24,23 @@ class ImagesController extends AppController
         if (!$limit || $limit > 100 || $limit < 1) {
             $limit = 20;
         }
+        $exclude = explode('', (string)$this->request->param('exclude'));
+        if (!is_array($exclude)) {
+            $exclude = [];
+        }
 
-        $ratingIds = $this->Images->Ratings->getImageIdsByUserId($this->ApiAuth->user('id'));
+        $excludeIds = $this->Images->Ratings->getImageIdsByUserId($this->ApiAuth->user('id'));
+
+        foreach ($exclude as $id) {
+            $id = intval($id);
+            if ($id > 0 && !in_array($id, $excludeIds)) {
+                $excludeIds[] = $id;
+            }
+        }
 
         $conditions = [];
-        if ($ratingIds) {
-            $conditions['id NOT IN'] = $ratingIds;
+        if ($excludeIds) {
+            $conditions['id NOT IN'] = $excludeIds;
         }
 
         $images = $this->Images->find('all', ['conditions' => $conditions, 'limit' => $limit, 'orderby' => 'id']);
