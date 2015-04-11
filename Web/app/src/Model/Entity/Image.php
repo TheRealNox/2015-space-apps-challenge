@@ -20,6 +20,7 @@ class Image extends Entity
         'image_detail' => true,
         'unique_key' => true,
         'date_taken' => true,
+        'interesting_count' => true,
         'created' => true,
         'modified' => true,
     ];

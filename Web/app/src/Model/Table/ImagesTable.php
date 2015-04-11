@@ -60,4 +60,31 @@ class ImagesTable extends Table
         $rules->add($rules->existsIn(['image_detail_id'], 'ImageDetails'));
         return $rules;
     }
+
+    public function calculateInteresting($imageIds)
+    {
+        if (!is_array($imageIds)) {
+            $imageIds = [$imageIds];
+        }
+        foreach ($imageIds as $imageId) {
+            $ratings = $this->Ratings->find(
+                'all', [
+                    'fields' => [
+                        'id'
+                    ],
+                    'conditions' => [
+                        'image_id' => $imageId,
+                        'is_interesting' => 1
+                    ]
+                ]
+            );
+            $sum = $ratings->count();
+
+            $query = $this->query();
+            $query->update()
+                ->set(['interesting_count' => $sum])
+                ->where(['id' => $imageId])
+                ->execute();
+        }
+    }
 }

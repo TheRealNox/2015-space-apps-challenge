@@ -44,8 +44,12 @@ class RatingsController extends AppController
         $rows_total = count($data);
         $rows_saved = 0;
         $errors = [];
+        $imageIds = [];
 
         foreach ($data as $rating) {
+            if (!in_array($rating['image_id'], $imageIds) && $rating['is_interesting']) {
+                $imageIds[] = $rating['image_id'];
+            }
             $rating['user_id'] = $this->ApiAuth->user('id');
             $newRating = $this->Ratings->newEntity();
             $newRating = $this->Ratings->patchEntity($newRating, $rating);
@@ -60,6 +64,8 @@ class RatingsController extends AppController
         }
 
         $success = ($rows_total === $rows_saved);
+
+        $this->Ratings->Images->calculateInteresting($imageIds);
 
         $this->set(compact('errors', 'success', 'rows_total', 'rows_saved'));
         $this->set('_serialize', ['errors', 'success', 'rows_total', 'rows_saved']);
