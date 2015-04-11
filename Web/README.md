@@ -24,11 +24,13 @@ Registers a new user. Supplies an auth_token which can be used in subsequent req
 - password
 
 **Returns:**
+``
 [
   errors: [],
   auth_token: "blah blah blah",
   success: true
 ]
+``
 
 ### users/login
 ``POST /api/users/login``
@@ -40,10 +42,12 @@ Logs a user in. Supplies an auth_token which can be used in subsequent requests.
 - password
 
 **Returns:**
+``
 [
   auth_token: "blah blah blah",
   success: true
 ]
+``
 
 ### ratings
 ``GET /api/users/login``
@@ -54,6 +58,7 @@ Shows all ratings for the logged in user.
 - (none)
 
 **Returns:**
+``
 [
   [
     id: 123,
@@ -67,3 +72,4 @@ Shows all ratings for the logged in user.
   ],
   ...
 ]
+``
