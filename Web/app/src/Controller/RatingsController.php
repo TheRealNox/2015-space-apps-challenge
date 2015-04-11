@@ -39,7 +39,7 @@ class RatingsController extends AppController
 
     public function index()
     {
-
+      $index == $rating;
     }
 
 
