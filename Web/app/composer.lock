@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8eeac727eb2d0d71d3388c2c3a6a9392",
+    "hash": "9209e245cbf710060954e895a06031b5",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -531,6 +531,52 @@
                 "password"
             ],
             "time": "2014-11-20 16:49:30"
+        },
+        {
+            "name": "mills/google-places",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/anthony-mills/google-places.git",
+                "reference": "51a548307989c95396fc70dc18d8d1da795a7908"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/anthony-mills/google-places/zipball/51a548307989c95396fc70dc18d8d1da795a7908",
+                "reference": "51a548307989c95396fc70dc18d8d1da795a7908",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "mills": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPLV2"
+            ],
+            "authors": [
+                {
+                    "name": "Anthony Mills",
+                    "email": "me@anthony-mills.com",
+                    "homepage": "http://www.anthony-mills.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP wrapper Google Places API",
+            "homepage": "https://github.com/anthony-mills/google-places",
+            "keywords": [
+                "api",
+                "geolocation",
+                "googleplaces",
+                "locate",
+                "places"
+            ],
+            "time": "2015-03-16 04:49:40"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -1380,6 +1426,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "google/apiclient": 20,
+        "mills/google-places": 20,
         "psy/psysh": 0
     },
     "prefer-stable": true,
