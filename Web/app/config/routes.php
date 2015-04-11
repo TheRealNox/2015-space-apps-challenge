@@ -46,10 +46,10 @@ Router::scope('/', function ($routes) {
     /**
      * These routes will probably be removed eventually.
      */
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    /*$routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
-    $routes->fallbacks('InflectedRoute');
+    $routes->fallbacks('InflectedRoute');*/
 });
 
 Router::scope('/api', function ($routes) {
@@ -75,8 +75,6 @@ Router::scope('/api', function ($routes) {
     $routes->resources('Images', [
         'only' => ['index']
     ]);
-
-    $routes->fallbacks('InflectedRoute');
 });
 
 /**
