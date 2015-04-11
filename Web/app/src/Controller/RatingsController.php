@@ -39,7 +39,14 @@ class RatingsController extends AppController
 
     public function index()
     {
-      $index == $rating;
+        $ratings = $this->Ratings->find('all', [
+            'conditions' => [
+                'user_id' => $this->ApiAuth->user('id')
+            ]
+        ]);
+
+        $this->set(compact('ratings'));
+        $this->set('_serialize', ['ratings']);
     }
 
 
