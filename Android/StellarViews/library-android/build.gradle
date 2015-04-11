@@ -23,5 +23,6 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.0.0'
     compile files('libs/gson-2.2.4.jar')
     compile 'com.google.code.gson:gson:2.3'
+    compile 'com.android.support:recyclerview-v7:21.0.0'
     compile project(':volley')
 }

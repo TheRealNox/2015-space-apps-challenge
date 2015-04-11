@@ -1,6 +1,7 @@
-package nz.co.spaceapp.stellarviews;
+package nz.co.spaceapp.stellarviews.activities;
 
 import android.content.res.Configuration;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -9,17 +10,27 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import nz.co.spaceapp.stellarviews.explore.ExploreFragment;
+import java.util.ArrayList;
+
+import nz.co.spaceapp.stellarviews.Authentication;
+import nz.co.spaceapp.stellarviews.Discovery;
+import nz.co.spaceapp.stellarviews.R;
+import nz.co.spaceapp.stellarviews.fragments.ExploreFragment;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    public static final String DISCOVERIES = "discoveries";
+    public static final String AUTHENTICATION = "auth";
 
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
@@ -29,6 +40,8 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private int mCurrentPosition = -1;
     private Fragment[] mFragments;
+    private ArrayList<Discovery> mDiscoveries;
+    private Authentication mAuthentication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +50,9 @@ public class MainActivity extends ActionBarActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+
+        mDiscoveries = getIntent().getExtras().getParcelableArrayList(DISCOVERIES);
+        mAuthentication = getIntent().getExtras().getParcelable(AUTHENTICATION);
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -63,13 +79,29 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
         mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mTitles));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        setupHeader();
+
         mFragments = new Fragment[mTitles.length];
         mFragments[0] = new ExploreFragment();
 
         if (savedInstanceState == null)
-            selectItem(0);
+            selectItem(1);
+    }
+
+    private void setupHeader() {
+        View view = LayoutInflater.from(this).inflate(R.layout.header_login, null);
+
+        TextView emailAddress = (TextView) view.findViewById(R.id.email);
+        emailAddress.setText(mAuthentication.getEmailAddress());
+        mDrawerList.addHeaderView(view);
+    }
+
+    public ArrayList<Discovery> getDiscoveries() {
+        return mDiscoveries;
     }
 
     @Override
@@ -111,9 +143,9 @@ public class MainActivity extends ActionBarActivity {
      * Swaps fragments in the main content view
      */
     private void selectItem(int position) {
-        // Create a new fragment and specify the planet to show based on position
 
-        if (position != mCurrentPosition) {
+        // Create a new fragment and specify the planet to show based on position
+        if (position != 0 && position != mCurrentPosition) {
             mCurrentPosition = position;
 
             // Insert the fragment by replacing any existing fragment
@@ -124,7 +156,7 @@ public class MainActivity extends ActionBarActivity {
 
             // Highlight the selected item, update the title, and close the drawer
             mDrawerList.setItemChecked(position, true);
-            setTitle(mTitles[position]);
+            setTitle(mTitles[position - 1]);
         }
         mDrawerLayout.closeDrawer(mDrawerList);
     }
