@@ -50,9 +50,6 @@
     <ClCompile Include="GeneratedFiles\qrc_StellarViewsFinder.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="RequestManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TaskManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -71,6 +68,24 @@
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Request.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Request.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Request.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GetFireTileRequest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GetFireTileRequest.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GetFireTileRequest.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="StellarViewsFinder.h">
@@ -88,13 +103,16 @@
     <CustomBuild Include="Controller.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="Request.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GetFireTileRequest.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_StellarViewsFinder.h">
       <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RequestManager.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Task.hpp">
       <Filter>Header Files</Filter>

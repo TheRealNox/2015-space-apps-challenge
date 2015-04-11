@@ -8,63 +8,61 @@
 
 //Local includes
 #include "TaskManager.h"
+#include "GetFireTileRequest.h"
 
-	class									Controller : public QObject
-	{
-		Q_OBJECT
+class									Controller : public QObject
+{
+	Q_OBJECT
 
 		// -- Attributs
-	private:
-		QThread								_managerThread;
-		TaskManager *						_taskManager;
+private:
+	QThread								_managerThread;
+	TaskManager *						_taskManager;
 
-		QList<BaseTask*>*					_cmdsQueue;
+	QList<BaseTask*>*					_cmdsQueue;
 
-		QMutex *							_queueLocker;
-		QWaitCondition *					_waitCondition;
-		// --!Attributs
+	QMutex *							_queueLocker;
+	QWaitCondition *					_waitCondition;
+	// --!Attributs
 
-		// -- CTors & DTor
-	public:
-		Controller();
-		~Controller();
+	// -- CTors & DTor
+public:
+	Controller();
+	~Controller();
 
-	private:
-		// --!CTors & DTor
+private:
+	// --!CTors & DTor
 
-		// -- Methods
-	public:
-		void								initializeAndStartTaskManager();
+	// -- Methods
+public:
+	void								initializeAndStartTaskManager();
 
-	private:
-		void								sendTaskToModel(BaseTask*);
-		// --!Methods
+private:
+	void								sendTaskToModel(BaseTask*);
+	// --!Methods
 
-		// -- Slots
-	public slots:
-//--------------------
-//Triggered from View:
-//--------------------
-//------INTERNAL CMDS
-		void								undoTriggered();
-		void								redoTriggered();
-		void								groupOfCommandsTriggered(bool beginning);
+	// -- Slots
+public slots:
+	//--------------------
+	//Triggered from View:
+	//--------------------
+	//------INTERNAL CMDS
 
-//------GENERAL UI CMDS
-		void								shotToBeAddedToShotList(QString, bool toCheck);
+	//------GENERAL CMDS
+	void								getFireTileRequest(GetFireTileRequest*);
 
-//--------------------
-//Triggered from Model:
-//--------------------
+	//--------------------
+	//Triggered from Model:
+	//--------------------
 
-		// --!Slots
+	// --!Slots
 
-		// -- Signals
-	signals:
-		// --!Signals
+	// -- Signals
+signals:
+	// --!Signals
 
 
-	};
+};
 
 #endif//__CONTROLLER_H__
 

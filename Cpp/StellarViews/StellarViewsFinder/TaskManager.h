@@ -6,20 +6,30 @@
 #include <QList>
 #include <QObject>
 #include <QThread>
+#include <QThreadPool>
 #include <QWaitCondition>
 
 //Local includes
+#include "GetFireTileRequest.h"
 #include "Task.hpp"
 
 class							TaskManager : public QObject
 {
 	Q_OBJECT
 
+		//Here we typedef a function protopy to FUNCPTR in order to help readability
+	typedef BaseTask *			(TaskManager::*FUNCPTR)(BaseTask * task);
+
+	//Another typedef: the map containing the enum for key and the functor for value
+	typedef std::map<unsigned int, FUNCPTR> DispatcherMap;
+
 		// -- Attributs
 private:
 	QList<BaseTask*>*			_cmdsQueue;
 	QMutex *					_queueLocker;
 	QWaitCondition *			_waitCondition;
+	DispatcherMap				_mainTaskDispatcher;
+	DispatcherMap				_requestTaskDispatcher;
 	bool						_continue;
 	// --!Attributs
 
@@ -39,9 +49,14 @@ public:
 	void						quit();
 
 private:
+	void						executeTask(BaseTask *);
+	BaseTask*					runRequestCmds(BaseTask*);
+	BaseTask*					getFireTileRequest(BaseTask*);
+
+
 	// --!Methods
 
-	public slots :
+public slots :
 		void						run();
 };
 

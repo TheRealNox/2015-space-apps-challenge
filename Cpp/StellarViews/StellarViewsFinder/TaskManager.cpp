@@ -6,6 +6,8 @@ _queueLocker(NULL),
 _waitCondition(NULL)
 {
 	this->_continue = true;
+	this->_mainTaskDispatcher[RequestMask] = &TaskManager::runRequestCmds;
+	this->_requestTaskDispatcher[FireTileRequest] = &TaskManager::getFireTileRequest;
 }
 
 TaskManager::~TaskManager()
@@ -46,7 +48,7 @@ void					TaskManager::run()
 			this->_cmdsQueue->pop_front();
 			this->_queueLocker->unlock();
 			if (cmd != NULL)
-				//run task here;
+				this->executeTask(cmd);
 			this->_queueLocker->lock();
 		}
 		this->_queueLocker->unlock();
@@ -58,3 +60,32 @@ void					TaskManager::quit()
 	this->_continue = false;
 }
 
+void					TaskManager::executeTask(BaseTask *base)
+{
+	unsigned int	subtype = (base->getCommand() & SUBTYPE_MASK);
+
+
+	if (this->_mainTaskDispatcher[subtype] != NULL)
+		base = (this->*(_mainTaskDispatcher[subtype]))(base);
+
+}
+
+BaseTask *				TaskManager::runRequestCmds(BaseTask *base)
+{
+	unsigned int	cmdID = (base->getCommand() & CMD_MASK);
+
+	if (this->_requestTaskDispatcher[cmdID] != NULL)
+		base = (this->*(_requestTaskDispatcher[cmdID]))(base);
+
+	return base;
+}
+
+BaseTask*				TaskManager::getFireTileRequest(BaseTask* base)
+{
+	Task<GetFireTileRequest*> * task = (Task<GetFireTileRequest*>*)base;
+	GetFireTileRequest * request = task->getArg();
+
+	QThreadPool::globalInstance()->start((QRunnable*)request);
+
+	return base;
+}

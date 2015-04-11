@@ -57,24 +57,10 @@ void						Controller::sendTaskToModel(BaseTask * task)
 //
 //Triggered from view
 //
-void						Controller::undoTriggered()
-{
-	this->sendTaskToModel(new BaseTask(InternalMask | Undo));
-}
 
-void						Controller::redoTriggered()
+void						Controller::getFireTileRequest(GetFireTileRequest * toAdd)
 {
-	this->sendTaskToModel(new BaseTask(InternalMask | Redo));
-}
-
-void						Controller::groupOfCommandsTriggered(bool beginning)
-{
-	this->sendTaskToModel(new BaseTask(InternalMask | (beginning ? BeginGroupOfCmds : EndGroupOfCmds)));
-}
-
-void						Controller::shotToBeAddedToShotList(QString toAdd, bool toCheck)
-{
-	this->sendTaskToModel(new Task<QString>((toCheck ? (GeneralUIMask | PushAssetToShotListWithCheck) : (GeneralUIMask | PushAssetToShotListWithoutCheck)), toAdd));
+	this->sendTaskToModel(new Task<GetFireTileRequest *>((RequestMask | FireTileRequest), toAdd));
 }
 
 
