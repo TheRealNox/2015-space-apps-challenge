@@ -68,11 +68,11 @@ class UsersTable extends Table
 
     public function beforeSave($event, $user, $options)
     {
-        /*if (!$user->isNew() && $user->has('password') && empty($user->password)) {
+        if (!$user->isNew() && $user->has('password') && empty($user->password)) {
             $user->unsetProperty('password');
         } else {
             $user->password = $this->hashPassword($user->password);
-        }*/
+        }
     }
 
     public function hashPassword($password)
