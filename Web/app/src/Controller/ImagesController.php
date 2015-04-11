@@ -35,8 +35,10 @@ class ImagesController extends AppController
             $image->url = $this->generateUrl($date, $image['tile_x'], $image['tile_y']);
         }
 
-        $this->set(compact('images'));
-        $this->set('_serialize', ['images']);
+        $success = true;
+
+        $this->set(compact('images', 'success'));
+        $this->set('_serialize', ['images', 'success']);
     }
 
     protected function generateUrl($dateTaken, $tileX, $tileY)
