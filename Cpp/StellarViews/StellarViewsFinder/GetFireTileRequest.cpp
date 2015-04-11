@@ -19,12 +19,15 @@ void				GetFireTileRequest::run()
 {
 	if (this->_nam == NULL)
 		this->_nam = new QNetworkAccessManager;
-
 	bool			useFull = false;
 
 	QNetworkReply* reply = this->_nam->get(*this->_request);
+	QTimer timer;
+	timer.setSingleShot(true);
 	QEventLoop eventLoop;
 	QObject::connect(reply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+	QObject::connect(&timer, SIGNAL(timeout()), &eventLoop, SLOT(quit()));
+	timer.start(5000);
 	eventLoop.exec();
 	QVariant statusCodeV =
 		reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
@@ -62,7 +65,7 @@ void				GetFireTileRequest::run()
 			{
 				qDebug() << "Red with name:" << name;
 				image.save(path, "PNG");
-				this->pushToServer();
+				//this->pushToServer();
 				i = image.byteCount();
 			}
 		}
@@ -122,9 +125,9 @@ void				GetFireTileRequest::pushToServer()
 
 	subjson2.insert("x", this->_current.x);
 	subjson2.insert("y", this->_current.y);
-
-	json.insert("CoordinateUUID", QString(QCryptographicHash::hash(hash.toLocal8Bit(), QCryptographicHash::Algorithm::Md5).toStdString().c_str()));
-	json.insert("Time", QDate::currentDate().toString("yyyy-MM-dd"));
+	QString CoorUUID = QString(QCryptographicHash::hash(hash.toLocal8Bit(), QCryptographicHash::Algorithm::Md5).toHex());
+	json.insert("CoordinateUUID", CoorUUID.toStdString().c_str());
+	json.insert("Time", QDate::currentDate().addDays(-1).toString("yyyy-MM-dd"));
 	json.insert("TileCoordinates", subjson1);
 	json.insert("TilePosition", subjson2);
 	json.insert("Category", "Fire All");

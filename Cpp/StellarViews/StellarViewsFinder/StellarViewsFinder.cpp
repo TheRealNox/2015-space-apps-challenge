@@ -52,7 +52,9 @@ void					StellarViewsFinder::buttonClicked()
 		//https://map2b.vis.earthdata.nasa.gov/wms/wms.php?TIME=2015-01-19&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=MODIS_Fires_All&WIDTH=512&HEIGHT=512&SRS=EPSG%3A4326&STYLES=&BBOX=189%2C90%2C198%2C99
 
 		QString request("http://map2a.vis.earthdata.nasa.gov/wms/wms.php?TIME=");
-		request.append(QDate::currentDate().toString("yyyy-MM-dd"));
+		QDate current = QDate::currentDate();
+		current = current.addDays(-1);
+		request.append(current.toString("yyyy-MM-dd"));
 		request.append("&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=MODIS_Fires_All&WIDTH=512&HEIGHT=512&SRS=EPSG%3A4326&STYLES=&BBOX=");
 		request.append(QString::number(this->_top.lat));
 		request.append("%2C");

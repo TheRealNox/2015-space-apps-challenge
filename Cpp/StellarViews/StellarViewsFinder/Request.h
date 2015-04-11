@@ -9,6 +9,7 @@
 #include <QRunnable>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <Qtimer>
 
 class						Request : public QObject, QRunnable
 {
