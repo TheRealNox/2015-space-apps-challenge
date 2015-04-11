@@ -44,7 +44,6 @@ class ImageDetailsTable extends Table
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('id', 'create')
-            ->add('uuid', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('uuid')
             ->add('lat', 'valid', ['rule' => 'decimal'])
             ->allowEmpty('lat')

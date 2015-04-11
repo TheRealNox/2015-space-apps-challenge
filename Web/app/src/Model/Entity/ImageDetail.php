@@ -17,8 +17,10 @@ class ImageDetail extends Entity
     protected $_accessible = [
         'image_collection_id' => true,
         'uuid' => true,
-        'lat' => true,
-        'long' => true,
+        'lat_top' => true,
+        'lat_bottom' => true,
+        'long_top' => true,
+        'long_bottom' => true,
         'tile_x' => true,
         'tile_y' => true,
         'image_collection' => true,
