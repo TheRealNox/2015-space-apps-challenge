@@ -20,6 +20,11 @@ class ImagesController extends AppController
      */
     public function index()
     {
+        $limit = (int)$this->request->param('limit');
+        if (!$limit || $limit > 100 || $limit < 1) {
+            $limit = 20;
+        }
+
         $ratingIds = $this->Images->Ratings->getImageIdsByUserId($this->ApiAuth->user('id'));
 
         $conditions = [];
@@ -27,7 +32,7 @@ class ImagesController extends AppController
             $conditions['id NOT IN'] = $ratingIds;
         }
 
-        $images = $this->Images->find('all', ['conditions' => $conditions]);
+        $images = $this->Images->find('all', ['conditions' => $conditions, 'limit' => $limit, 'orderby' => 'id']);
 
         foreach ($images as $image) {
             $date = new Time($image['date_taken']);

@@ -86,7 +86,19 @@ class UsersController extends AppController
     {
         $auth_token = $this->ApiAuth->refreshAuthToken();
 
-        $this->set(compact('auth_token'));
-        $this->set('_serialize', ['auth_token']);
+        if (is_string($auth_token)) {
+            $success = false;
+        } else if ($auth_token) {
+            // still logged in
+            $success = true;
+            $auth_token = null;
+        } else {
+            // not logged in, and invalid
+            $success = false;
+            $auth_token = null;
+        }
+
+        $this->set(compact('auth_token', 'success'));
+        $this->set('_serialize', ['auth_token', 'success']);
     }
 }
