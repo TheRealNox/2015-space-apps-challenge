@@ -131,7 +131,7 @@ class ApiAuthComponent extends Component
     /**
      * @return bool
      */
-    public function isLoggedIn()
+    public function isLoggedIn($cache = true)
     {
         static $results = [];
         $token = $this->getToken();
@@ -141,8 +141,10 @@ class ApiAuthComponent extends Component
         }
 
         // Basic caching
-        if (isset($results[$token])) {
-            return $results[$token];
+        if ($cache) {
+            if (isset($results[$token])) {
+                return $results[$token];
+            }
         }
 
         $userAuthTokens = TableRegistry::get('UserAuthTokens');
@@ -192,6 +194,8 @@ class ApiAuthComponent extends Component
         $this->setCurrentUser($user);
         $expires = Time::now();
         $expires->modify(self::TOKEN_EXPIRY);
+        // Reset cache
+        $this->isLoggedIn(false);
 
         $data = [
             'user_id' => $user->id,

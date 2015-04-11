@@ -79,6 +79,6 @@ class UsersController extends AppController
         }
 
         $this->set(compact('auth_token', 'errors', 'success'));
-        $this->set('_serialize', ['token', 'errors', 'success']);
+        $this->set('_serialize', ['auth_token', 'errors', 'success']);
     }
 }
