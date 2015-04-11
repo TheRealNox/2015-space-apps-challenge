@@ -64,6 +64,10 @@ Router::scope('/api', function ($routes) {
             'login' => [
                 'action' => 'login',
                 'method' => 'POST'
+            ],
+            'refresh_auth_token' => [
+                'action' => 'refresh_auth_token',
+                'method' => 'GET'
             ]
         ]
     ]);
