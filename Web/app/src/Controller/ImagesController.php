@@ -3,8 +3,6 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 
-use Cake\I18n\Time;
-
 /**
  * Images Controller
  *
@@ -16,20 +14,33 @@ class ImagesController extends AppController
     /**
      * Index method
      *
+     * @!param int $image_detail_id
+     * @!param int $limit
+     * @!param string $exclude
+     * @!param bool $exclude_rated
      * @return void
      */
     public function index()
     {
-        $limit = (int)$this->request->param('limit');
+        $imageDetailId = (int)$this->request->query('image_detail_id');
+        $limit = (int)$this->request->query('limit');
         if (!$limit || $limit > 100 || $limit < 1) {
             $limit = 20;
         }
-        $exclude = explode(',', (string)$this->request->param('exclude'));
+        $exclude = explode(',', (string)$this->request->query('exclude'));
         if (!is_array($exclude)) {
             $exclude = [];
         }
+        $exclude_rated = (string)$this->request->query('exclude_rated');
+        if (strlen($exclude_rated) > 0 && !$exclude_rated) {
+            $exclude_rated = false;
+        } else {
+            $exclude_rated = true;
+        }
 
-        $excludeIds = $this->Images->Ratings->getImageIdsByUserId($this->ApiAuth->user('id'));
+        if ($exclude_rated) {
+            $excludeIds = $this->Images->Ratings->getImageIdsByUserId($this->ApiAuth->user('id'));
+        }
 
         foreach ($exclude as $id) {
             $id = intval($id);
@@ -39,33 +50,27 @@ class ImagesController extends AppController
         }
 
         $conditions = [];
+        if ($imageDetailId) {
+            $conditions['Images.image_detail_id'] = $imageDetailId;
+        }
         if ($excludeIds) {
-            $conditions['id NOT IN'] = $excludeIds;
+            $conditions['Images.id NOT IN'] = $excludeIds;
         }
 
         $images = $this->Images->find(
             'all', [
                 'conditions' => $conditions,
                 'limit' => $limit,
-                'order' => 'id DESC'
+                'order' => 'Images.id DESC',
+                'contain' => ['ImageDetails']
             ]
         );
 
-        foreach ($images as $image) {
-            $date = new Time($image['date_taken']);
-            $date = $date->i18nFormat('YYYY-MM-dd');
-            $image->url = $this->generateUrl($date, $image['tile_x'], $image['tile_y']);
-        }
+        $this->Images->addExtras($images);
 
         $success = true;
 
         $this->set(compact('images', 'success'));
         $this->set('_serialize', ['images', 'success']);
-    }
-
-    protected function generateUrl($dateTaken, $tileX, $tileY)
-    {
-        $url = 'https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=%s&Layer=MODIS_Terra_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%%2Fjpeg&TileMatrix=8&TileCol=%d&TileRow=%d';
-        return sprintf($url, $dateTaken, $tileY, $tileX);
     }
 }

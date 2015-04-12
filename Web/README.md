@@ -74,6 +74,27 @@ Shows all ratings for the logged in user.
 ]
 ``
 
+### ratings/add
+
+``POST /api/ratings/add``
+
+Recieves auth_token and Image ID to update number of likes
+
+**Parameters:**
+- auth_token
+- ratings
+
+**Returns:**
+
+``
+{
+    "errors": [],
+    "success": false,
+    "rows_total": 1,
+    "rows_saved": 1
+}
+``
+
 ### images
 ``GET /api/images?auth_token={auth-token}``
 
@@ -81,6 +102,8 @@ Returns Images from data supplied by Orchestrate, Amount is determined by availa
 
 **Parameters:**
 - (none)
+
+**Returns:**
 
 ``
 {

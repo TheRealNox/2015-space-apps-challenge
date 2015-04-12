@@ -57,10 +57,11 @@ Router::scope('/api', function ($routes) {
 
     $routes->resources('Users', [
         'only' => ['register', 'login'],
-        'actions' => [
-            'add' => 'register'
-        ],
         'map' => [
+            'register' => [
+                'action' => 'register',
+                'method' => 'POST'
+            ],
             'login' => [
                 'action' => 'login',
                 'method' => 'POST'
@@ -73,11 +74,27 @@ Router::scope('/api', function ($routes) {
     ]);
 
     $routes->resources('Ratings', [
-        'only' => ['add', 'index']
+        'only' => ['index', 'add'],
+        'map' => [
+            'index' => [
+                'action' => 'index',
+                'method' => 'GET'
+            ],
+            'add' => [
+                'action' => 'add',
+                'method' => 'POST'
+            ],
+        ]
     ]);
 
     $routes->resources('Images', [
-        'only' => ['index']
+        'only' => ['index'],
+        'map' => [
+            'index' => [
+                'action' => 'index',
+                'method' => 'GET'
+            ],
+        ]
     ]);
 });
 

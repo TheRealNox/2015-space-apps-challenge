@@ -17,6 +17,6 @@ class ImageCollection extends Entity
     protected $_accessible = [
         'title' => true,
         'sort_order' => true,
-        'images' => true,
+        'image_details' => true,
     ];
 }

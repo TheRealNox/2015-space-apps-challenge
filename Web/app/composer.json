@@ -11,7 +11,7 @@
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
         "socalnick/orchestrate-php-client": "0.5.*",
-        "google/apiclient": "~1.1@dev"
+        "joshtronic/php-googleplaces": "dev-master"
     },
     "require-dev": {
         "psy/psysh": "@stable",
