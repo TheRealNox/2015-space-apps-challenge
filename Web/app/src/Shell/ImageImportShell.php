@@ -14,11 +14,13 @@ class ImageImportShell extends Shell
 {
     const BATCH_SIZE = 100;
     const LOG_QUERIES = false;
+    const GOOGLE_MAX_PER_SECOND = 10;
+
+    protected $googleRateLimiting = [];
 
     public function main()
     {
         $client = new Client(Configure::read('Orchestrate.api_key'));
-        $geocodeUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s";
         $images = TableRegistry::get('Images');
 
         if (self::LOG_QUERIES) {
@@ -27,11 +29,6 @@ class ImageImportShell extends Shell
         }
 
         for ($n = 0; true; $n += self::BATCH_SIZE) {
-            if ($n % 10 === 0) {
-                sleep(1);
-                // make sure we don't go over 10 requests per second
-            }
-
             $searchOp = new SearchOperation('discovery', '*', self::BATCH_SIZE, $n);
             $searchResult = $client->execute($searchOp);
 
@@ -46,19 +43,6 @@ class ImageImportShell extends Shell
                 $exists = $images->find('all', ['conditions' => ['unique_key' => $result['path']['key']]])->first();
                 if ($exists) {
                     continue;
-                }
-
-                $lat = $result['value']['TileCoordinates']['TopLatitude'];
-                $long = $result['value']['TileCoordinates']['TopLongitude'];
-
-                $ch = curl_init(sprintf($geocodeUrl, $lat, $long));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $geocode = @json_decode(curl_exec($ch));
-                curl_close($ch);
-                $locationName = null;
-                if ($geocode->results) {
-                    $location = array_shift($geocode->results);
-                    $locationName = $location->formatted_address;
                 }
 
                 $data = [
@@ -93,6 +77,33 @@ class ImageImportShell extends Shell
         $exists = $imageDetails->find('all', ['conditions' => ['uuid' => $data['uuid']]])->first();
         if ($exists) {
             return $exists->id;
+        }
+
+        // Rate limiting start
+        $idx = time();
+        if (!isset($this->googleRateLimiting[$idx])) {
+            $this->googleRateLimiting[$idx] = 1;
+        } else {
+            $this->googleRateLimiting[$idx]++;
+        }
+        if ($this->googleRateLimiting[$idx] >= self::GOOGLE_MAX_PER_SECOND) {
+            $this->googleRateLimiting[$idx+1] = 1;
+            sleep(1);
+        }
+        // End rate limiting
+
+        $geocodeUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s";
+        $lat = $data['lat_top'];
+        $long = $data['long_top'];
+
+        $ch = curl_init(sprintf($geocodeUrl, $lat, $long));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $geocode = @json_decode(curl_exec($ch));
+        curl_close($ch);
+        $locationName = null;
+        if ($geocode->results) {
+            $location = array_shift($geocode->results);
+            $data['location_name'] = $location->formatted_address;
         }
 
         $imageDetail = $imageDetails->newEntity($data);
