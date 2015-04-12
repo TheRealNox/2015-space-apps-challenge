@@ -10,5 +10,6 @@
     <string name="come_again">Thank you for helping NASA to sort interesting discoveries !\n\nCome again tomorrow for more exinting pictures !</string>
     <string name="copyright">2015 - StellarViews</string>
     <string name="invalid_email_format">Invalid email format.</string>
+    <string name="register">Finalising account creation...</string>
 
 </resources>

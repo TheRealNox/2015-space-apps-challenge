@@ -1,12 +1,9 @@
 package nz.co.spaceapp.stellarviews.activities;
 
-import android.app.ActivityOptions;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -23,7 +20,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import nz.co.spaceapp.library.network.GetRequest;
 import nz.co.spaceapp.library.network.HttpPostParams;
@@ -62,7 +58,7 @@ public class RegisterActivity extends ActionBarActivity {
             public void onClick(View v) {
 
                 if (checkFields()) {
-                    mProgressDialog = ProgressDialog.show(RegisterActivity.this, "", "Registering you in ...", true);
+                    mProgressDialog = ProgressDialog.show(RegisterActivity.this, "", getResources().getString(R.string.register), true);
 
                     mProgressDialog.show();
                     HttpPostParams params = new HttpPostParams();
