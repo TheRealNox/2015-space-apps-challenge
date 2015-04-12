@@ -37,9 +37,7 @@ class RatingsController extends AppController
     {
         $data = $this->request->data;
 
-        if (isset($data['images'])) {
-            $data = $data['images'];
-        } else {
+        if (isset($data['image_id'])) {
             $data = [
                 [
                     'image_id' => $data['image_id'],
@@ -54,6 +52,9 @@ class RatingsController extends AppController
         $imageIds = [];
 
         foreach ($data as $rating) {
+            if (!is_array($rating)) {
+                continue;
+            }
             if (!isset($rating['image_id'], $rating['is_interesting'])) {
                 continue;
             }
