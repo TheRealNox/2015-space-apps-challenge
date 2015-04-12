@@ -59,6 +59,7 @@ class RatingsController extends AppController
 
         if (is_array($data)) {
             foreach ($data as $rating) {
+                $rating = (array)$rating;
                 if (!isset($rating['image_id'], $rating['is_interesting'])) {
                     continue;
                 }
