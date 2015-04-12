@@ -21,8 +21,17 @@ class RatingsController extends AppController
         $ratings = $this->Ratings->find('all', [
             'conditions' => [
                 'user_id' => $this->ApiAuth->user('id')
+            ],
+            'contain' => [
+                'Images' => [
+                    'ImageDetails'
+                ]
             ]
         ]);
+
+        foreach ($ratings as $rating) {
+            $this->Ratings->Images->addExtra($rating->image);
+        }
 
         $this->set(compact('ratings'));
         $this->set('_serialize', ['ratings']);
@@ -48,14 +57,13 @@ class RatingsController extends AppController
             ];
         }
 
-        $rows_total = count($data);
-        $rows_saved = 0;
-        $errors = [];
-        $imageIds = [];
-
         if (!is_array($data)) {
             $data = json_decode($data);
         }
+        $rows_saved = 0;
+        $errors = [];
+        $imageIds = [];
+        $rows_total = count($data);
 
         if (is_array($data)) {
             foreach ($data as $rating) {

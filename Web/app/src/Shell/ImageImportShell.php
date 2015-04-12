@@ -55,7 +55,6 @@ class ImageImportShell extends Shell
                     'tile_y' => $result['value']['TilePosition']['y'],
                     'lat_top' => $result['value']['TileCoordinates']['TopLatitude'],
                     'lat_bottom' => $result['value']['TileCoordinates']['BottomLatitude'],
-                    'location_name' => $locationName,
                     'long_top' => $result['value']['TileCoordinates']['TopLongitude'],
                     'long_bottom' => $result['value']['TileCoordinates']['BottomLongitude'],
                 ];
