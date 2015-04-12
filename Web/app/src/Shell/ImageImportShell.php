@@ -16,6 +16,9 @@ class ImageImportShell extends Shell
     const LOG_QUERIES = false;
     const GOOGLE_MAX_PER_SECOND = 10;
 
+    /**
+     * @var array
+     */
     protected $googleRateLimiting = [];
 
     public function main()
