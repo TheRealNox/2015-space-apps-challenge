@@ -37,8 +37,15 @@ class RatingsController extends AppController
     {
         $data = $this->request->data;
 
-        if (isset($data['image_id'])) {
-            $data = [$data];
+        if (isset($data['images'])) {
+            $data = $data['images'];
+        } else {
+            $data = [
+                [
+                    'image_id' => $data['image_id'],
+                    'is_interesting' => $data['is_interesting'],
+                ]
+            ];
         }
 
         $rows_total = count($data);
