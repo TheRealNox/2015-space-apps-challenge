@@ -18,18 +18,13 @@ class RatingsController extends AppController
      */
     public function index()
     {
-        $exclude_uninteresting = (string)$this->request->param('exclude_uninteresting');
-        if (strlen($exclude_uninteresting) > 0 && !$exclude_uninteresting) {
-            $exclude_uninteresting = false;
-        } else {
-            $exclude_uninteresting = true;
-        }
+        $is_interesting = (string)$this->request->param('is_interesting');
 
         $conditions = [
             'user_id' => $this->ApiAuth->user('id')
         ];
-        if ($exclude_uninteresting) {
-            $conditions['is_interesting'] = 1;
+        if (strlen($is_interesting) > 0) {
+            $conditions['is_interesting'] = (int)(bool)$is_interesting;
         }
 
         $ratings = $this->Ratings->find('all', [
