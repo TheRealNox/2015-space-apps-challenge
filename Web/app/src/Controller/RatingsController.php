@@ -44,15 +44,14 @@ class RatingsController extends AppController
      */
     public function add()
     {
-        $data = $this->request->data;
-
-        if (isset($data['ratings'])) {
-            $data = $data['ratings'];
+        if (isset($this->request->data['ratings'])) {
+            $data = $this->request->data['ratings'];
         } else {
             $data = [
                 [
-                    'image_id' => $data['image_id'],
-                    'is_interesting' => $data['is_interesting'],
+                    'image_id' => $this->request->data('image_id'),
+                    'is_interesting' => $this->request->data('is_interesting'),
+                    'note' => $this->request->data('note'),
                 ]
             ];
         }
