@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9d609058c004dca64dd4e6ab3dba77cf",
+    "hash": "2ed9a2289e15f4dd80264c71b2331899",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -491,50 +491,50 @@
             "time": "2014-11-20 16:49:30"
         },
         {
-            "name": "mills/google-places",
+            "name": "joshtronic/php-googleplaces",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/anthony-mills/google-places.git",
-                "reference": "51a548307989c95396fc70dc18d8d1da795a7908"
+                "url": "https://github.com/joshtronic/php-googleplaces.git",
+                "reference": "c72e2b06e1a2dcf7fa6d9b34fbe2d72edc68b012"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anthony-mills/google-places/zipball/51a548307989c95396fc70dc18d8d1da795a7908",
-                "reference": "51a548307989c95396fc70dc18d8d1da795a7908",
+                "url": "https://api.github.com/repos/joshtronic/php-googleplaces/zipball/c72e2b06e1a2dcf7fa6d9b34fbe2d72edc68b012",
+                "reference": "c72e2b06e1a2dcf7fa6d9b34fbe2d72edc68b012",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
+            "require-dev": {
+                "satooshi/php-coveralls": "dev-master"
+            },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "mills": "src"
+                "psr-4": {
+                    "joshtronic\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPLV2"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "Anthony Mills",
-                    "email": "me@anthony-mills.com",
-                    "homepage": "http://www.anthony-mills.com",
-                    "role": "Developer"
+                    "name": "Josh Sherman",
+                    "email": "josh@gravityblvd.com",
+                    "homepage": "http://joshtronic.com"
                 }
             ],
-            "description": "PHP wrapper Google Places API",
-            "homepage": "https://github.com/anthony-mills/google-places",
+            "description": "PHP Wrapper for the Google Places API",
+            "homepage": "https://github.com/joshtronic/php-googleplaces",
             "keywords": [
                 "api",
-                "geolocation",
-                "googleplaces",
-                "locate",
+                "google",
                 "places"
             ],
-            "time": "2015-03-16 04:49:40"
+            "time": "2014-09-20 19:38:53"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -1383,7 +1383,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "mills/google-places": 20,
+        "joshtronic/php-googleplaces": 20,
         "psy/psysh": 0
     },
     "prefer-stable": true,
