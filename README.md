@@ -1,7 +1,12 @@
 # 2015-space-apps-challenge
 
 ## __Project Description__
+
 This project is an Android application allowing users to visualize earth imagery taken from NASA's Global Imagery Browse Service (GIBS), in order to allow crowd voting of interesting images.
+
+The goal was to make people help NASA sort thousands of satellite images every day.
+We made an mobile application that allows users to "like" or "dislike" a satellite image with a possiblity of Fire event or any intersting event. 
+Via an invitation to register and login, people are able to like any satellite image where it may have an interesting event. In this way satellite imagery can be filtered via crowdvoting their likes and dislikes. This data can be used find interesting new discoveries.
 
 ###Android
 

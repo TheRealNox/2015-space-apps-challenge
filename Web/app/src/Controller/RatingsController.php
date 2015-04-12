@@ -18,7 +18,7 @@ class RatingsController extends AppController
      */
     public function index()
     {
-        $is_interesting = (string)$this->request->param('is_interesting');
+        $is_interesting = (string)$this->request->query('is_interesting');
 
         $conditions = [
             'user_id' => $this->ApiAuth->user('id')
