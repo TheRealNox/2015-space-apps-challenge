@@ -40,7 +40,6 @@ import nz.co.spaceapp.library.network.GetRequest;
 import nz.co.spaceapp.library.network.HttpPostParams;
 import nz.co.spaceapp.library.network.PostRequest;
 import nz.co.spaceapp.library.network.RequestManager;
-import nz.co.spaceapp.library.view.MultiSwipeToRefreshLayout;
 import nz.co.spaceapp.library.view.SwipeTouchListenerRecyclerView;
 import nz.co.spaceapp.stellarviews.Discovery;
 import nz.co.spaceapp.stellarviews.R;
@@ -67,6 +66,7 @@ public class ExploreFragment extends Fragment implements SwipeTouchListenerRecyc
     private View mComeAgain;
     private View mLoading;
     private View mLoader;
+    private int mPendingRequestDone = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -139,7 +139,13 @@ public class ExploreFragment extends Fragment implements SwipeTouchListenerRecyc
         mLoading.setVisibility(View.VISIBLE);
         Animation rotation = AnimationUtils.loadAnimation(getActivity(), R.anim.loading_ring);
         mLoader.startAnimation(rotation);
-        requestDiscoveries();
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                requestDiscoveries();
+            }
+        }, 3000);
     }
 
     @Override

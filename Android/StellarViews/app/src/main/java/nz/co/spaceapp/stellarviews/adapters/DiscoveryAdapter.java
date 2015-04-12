@@ -32,12 +32,14 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
         private TextView discoveryData;
         public SquareNetworkImageView discovery;
+        public TextView discoveryLocationName;
 
         public ViewHolder(View v) {
             super(v);
 
             discovery = (SquareNetworkImageView) v.findViewById(R.id.discovery);
             discoveryData = (TextView) v.findViewById(R.id.discovery_date);
+            discoveryLocationName = (TextView) v.findViewById(R.id.discovery_location);
         }
     }
 
@@ -61,6 +63,7 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
         viewHolder.discovery.setDefaultImageResId(R.mipmap.ic_space_app_challenge_greyscale);
         viewHolder.discovery.setImageUrl(discovery.getUrl(), ImageManager.getInstance().getImageLoader());
         viewHolder.discoveryData.setText(discovery.getCreatedTaken().substring(0, 10));
+        viewHolder.discoveryLocationName.setText(discovery.getLocationName());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package nz.co.spaceapp.stellarviews;
 
+import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -36,6 +37,9 @@ public class Discovery implements Parcelable {
     @SerializedName("image_detail_id")
     private String mImageDetailId;
 
+    @SerializedName("image_detail")
+    private ImageDetail mImageDetail;
+
     public Discovery() {
     }
 
@@ -52,6 +56,7 @@ public class Discovery implements Parcelable {
         dest.writeString(mDateTaken);
         dest.writeString(mUrl);
         dest.writeString(mImageDetailId);
+        dest.writeParcelable(mImageDetail, flags);
     }
 
     public static final Parcelable.Creator<Discovery> CREATOR = new Parcelable.Creator<Discovery>() {
@@ -71,6 +76,7 @@ public class Discovery implements Parcelable {
         mDateTaken = in.readString();
         mUrl = in.readString();
         mImageDetailId = in.readString();
+        mImageDetail = in.readParcelable(ImageDetail.class.getClassLoader());
     }
 
     public static Type getArrayType() {
@@ -91,5 +97,9 @@ public class Discovery implements Parcelable {
 
     public String getImageDetailId() {
         return mImageDetailId;
+    }
+
+    public String getLocationName() {
+        return mImageDetail.getLocationName() == null ? "" : mImageDetail.getLocationName();
     }
 }

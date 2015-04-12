@@ -39,7 +39,8 @@ public class MyDiscoveryAdapter extends BaseAdapter {
         } else
             holder = (RatingsHolder) convertView.getTag();
 
-        holder.discovery.setImageUrl(discovery.getDiscovery().getUrl(), ImageManager.getInstance().getImageLoader());
+        if (holder.discovery != null)
+            holder.discovery.setImageUrl(discovery.getDiscovery().getUrl(), ImageManager.getInstance().getImageLoader());
         return convertView;
     }
 
