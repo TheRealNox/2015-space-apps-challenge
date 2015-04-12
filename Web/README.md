@@ -74,6 +74,16 @@ Shows all ratings for the logged in user.
 ]
 ``
 
+### ratings/add
+
+``POST /api/ratings/add``
+
+Recieves auth_token and Image ID to update number of likes
+
+**Parameters:**
+- auth_token
+- image_id
+
 ### images
 ``GET /api/images?auth_token={auth-token}``
 
