@@ -53,22 +53,28 @@ class RatingsController extends AppController
         $errors = [];
         $imageIds = [];
 
-        foreach ($data as $rating) {
-            if (!isset($rating['image_id'], $rating['is_interesting'])) {
-                continue;
-            }
-            if (!in_array($rating['image_id'], $imageIds) && $rating['is_interesting']) {
-                $imageIds[] = $rating['image_id'];
-            }
-            $rating['user_id'] = $this->ApiAuth->user('id');
-            $newRating = $this->Ratings->newEntity();
-            $newRating = $this->Ratings->patchEntity($newRating, $rating);
-            $rErrors = (array)$newRating->errors();
-            if ($rErrors) {
-                $errors[] = $rErrors;
-            } else {
-                if ($this->Ratings->save($rating)) {
-                    $rows_saved++;
+        if (!is_array($data)) {
+            $data = json_decode($data);
+        }
+
+        if (is_array($data)) {
+            foreach ($data as $rating) {
+                if (!isset($rating['image_id'], $rating['is_interesting'])) {
+                    continue;
+                }
+                if (!in_array($rating['image_id'], $imageIds) && $rating['is_interesting']) {
+                    $imageIds[] = $rating['image_id'];
+                }
+                $rating['user_id'] = $this->ApiAuth->user('id');
+                $newRating = $this->Ratings->newEntity();
+                $newRating = $this->Ratings->patchEntity($newRating, $rating);
+                $rErrors = (array)$newRating->errors();
+                if ($rErrors) {
+                    $errors[] = $rErrors;
+                } else {
+                    if ($this->Ratings->save($rating)) {
+                        $rows_saved++;
+                    }
                 }
             }
         }
