@@ -22,16 +22,16 @@ class ImagesController extends AppController
      */
     public function index()
     {
-        $imageDetailId = (int)$this->request->param('image_detail_id');
-        $limit = (int)$this->request->param('limit');
+        $imageDetailId = (int)$this->request->query('image_detail_id');
+        $limit = (int)$this->request->query('limit');
         if (!$limit || $limit > 100 || $limit < 1) {
             $limit = 20;
         }
-        $exclude = explode(',', (string)$this->request->param('exclude'));
+        $exclude = explode(',', (string)$this->request->query('exclude'));
         if (!is_array($exclude)) {
             $exclude = [];
         }
-        $exclude_rated = (string)$this->request->param('exclude_rated');
+        $exclude_rated = (string)$this->request->query('exclude_rated');
         if (strlen($exclude_rated) > 0 && !$exclude_rated) {
             $exclude_rated = false;
         } else {
