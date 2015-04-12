@@ -9,6 +9,7 @@ use Cake\ORM\TableRegistry;
 
 use SocalNick\Orchestrate\Client;
 use SocalNick\Orchestrate\SearchOperation;
+use Mills\GooglePlaces\googlePlaces;
 
 class ImageImportShell extends Shell
 {
@@ -18,6 +19,7 @@ class ImageImportShell extends Shell
     public function main()
     {
         $client = new Client(Configure::read('Orchestrate.api_key'));
+        $googlePlaces = new googlePlaces(Configure::read('GooglePlaces.api_key'));
         $images = TableRegistry::get('Images');
 
         if (self::LOG_QUERIES) {
@@ -42,6 +44,15 @@ class ImageImportShell extends Shell
                     continue;
                 }
 
+                $lat = $result['value']['TileCoordinates']['TopLatitude'];
+                $long = $result['value']['TileCoordinates']['TopLongitude'];
+                $googlePlaces->setLocation($lat. ',' . $long);
+                $googlePlaces->setRadius(5000);
+                $places = $googlePlaces->Search();
+
+                var_dump($places);
+                die;
+
                 $data = [
                     'image_collection_id' => (int)array_search($result['value']['Category'], $collections, true),
                     'uuid' => $result['value']['CoordinateUUID'],
@@ -49,6 +60,7 @@ class ImageImportShell extends Shell
                     'tile_y' => $result['value']['TilePosition']['y'],
                     'lat_top' => $result['value']['TileCoordinates']['TopLatitude'],
                     'lat_bottom' => $result['value']['TileCoordinates']['BottomLatitude'],
+                    'location_name' => $locationName,
                     'long_top' => $result['value']['TileCoordinates']['TopLongitude'],
                     'long_bottom' => $result['value']['TileCoordinates']['BottomLongitude'],
                 ];

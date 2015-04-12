@@ -21,6 +21,7 @@ class ImageDetail extends Entity
         'lat_bottom' => true,
         'long_top' => true,
         'long_bottom' => true,
+        'location_name' => true,
         'tile_x' => true,
         'tile_y' => true,
         'image_collection' => true,
