@@ -67,6 +67,11 @@ class RatingsController extends AppController
                     $imageIds[] = $rating['image_id'];
                 }
                 $rating['user_id'] = $this->ApiAuth->user('id');
+                $exists = $this->Ratings->find('all', ['conditions' => ['user_id' => $rating['user_id'], 'image_id' => $rating['user_id']]])->first();
+                if ($exists) {
+                    $errors[] = sprintf('Image %d has already been rated', $rating['image_id']);
+                    continue;
+                }
                 $newRating = $this->Ratings->newEntity($rating);
                 $rErrors = (array)$newRating->errors();
                 if ($rErrors) {
