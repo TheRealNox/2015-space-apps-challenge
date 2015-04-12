@@ -37,6 +37,8 @@ class RatingsController extends AppController
     {
         $data = $this->request->data;
 
+        var_dump($data);
+
         if (isset($data['ratings'])) {
             $data = $data['ratings'];
         } else {
