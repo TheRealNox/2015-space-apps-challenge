@@ -91,7 +91,7 @@ Recieves auth_token and Image ID to update number of likes
     "errors": [],
     "success": false,
     "rows_total": 1,
-    "rows_saved": 0
+    "rows_saved": 1
 }
 ``
 
