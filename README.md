@@ -44,5 +44,9 @@ ___
 
 ###Android
 
+Play Store Link: https://play.google.com/store/apps/details?id=nz.co.spaceapp.stellarviews&hl=en
+
+App Video Link: https://www.youtube.com/watch?v=Y41Y4KYhViI
+
 ![Splash Screen](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165449.png) ![Discovery Feed](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165521.png) ![My Discoveries](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165544.png)
 
