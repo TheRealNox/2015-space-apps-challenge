@@ -27,6 +27,11 @@ class ImageImportShell extends Shell
         }
 
         for ($n = 0; true; $n += self::BATCH_SIZE) {
+            if ($n % 10 === 0) {
+                sleep(1);
+                // make sure we don't go over 10 requests per second
+            }
+
             $searchOp = new SearchOperation('discovery', '*', self::BATCH_SIZE, $n);
             $searchResult = $client->execute($searchOp);
 
