@@ -103,7 +103,7 @@ class ImagesTable extends Table
         $image->url = $this->generateUrl($date, $image->image_detail->tile_x, $image->image_detail->tile_y);
     }
 
-    protected function generateUrl($dateTaken, $tileX, $tileY)
+    public function generateUrl($dateTaken, $tileX, $tileY)
     {
         $url = 'https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=%s&Layer=MODIS_Terra_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%%2Fjpeg&TileMatrix=8&TileCol=%d&TileRow=%d';
         return sprintf($url, $dateTaken, $tileY, $tileX);

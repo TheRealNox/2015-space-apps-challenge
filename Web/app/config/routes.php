@@ -94,6 +94,10 @@ Router::scope('/api', function ($routes) {
                 'action' => 'index',
                 'method' => 'GET'
             ],
+            'get_previous' => [
+                'action' => 'get_previous',
+                'method' => 'GET'
+            ]
         ]
     ]);
 });
