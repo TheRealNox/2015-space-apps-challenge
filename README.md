@@ -8,13 +8,6 @@ The goal was to make people help NASA sort thousands of satellite images every d
 We made an mobile application that allows users to "like" or "dislike" a satellite image with a possiblity of Fire event or any intersting event. 
 Via an invitation to register and login, people are able to like any satellite image where it may have an interesting event. In this way satellite imagery can be filtered via crowdvoting their likes and dislikes. This data can be used find interesting new discoveries.
 
-###Android
-
-
-
-___
-
-
 
 ###Web
 
@@ -44,4 +37,12 @@ Server made in C++ using Qt framework. Will be run daily to add new discoveries 
 - We request, at very precise level, the layers coming from the EarthData database.
 - We then process them using our custom search plugin(s) (Fire, Tornado, etc.).
 And finally the analyser will create and push new discoveries to our server from those analysis.
+
+
+___
+
+
+###Android
+
+![Splash Screen](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165449.png) ![Discovery Feed](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165521.png) ![My Discoveries](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165544.png)
 
