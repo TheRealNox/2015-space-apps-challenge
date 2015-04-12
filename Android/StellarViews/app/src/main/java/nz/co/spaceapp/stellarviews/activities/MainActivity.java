@@ -25,6 +25,7 @@ import nz.co.spaceapp.stellarviews.Authentication;
 import nz.co.spaceapp.stellarviews.Discovery;
 import nz.co.spaceapp.stellarviews.R;
 import nz.co.spaceapp.stellarviews.fragments.ExploreFragment;
+import nz.co.spaceapp.stellarviews.fragments.MyDiscoveriesFragment;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -60,22 +61,19 @@ public class MainActivity extends ActionBarActivity {
         mTitles = getResources().getStringArray(R.array.drawer_menu);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
 
-            /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 getSupportActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu();
             }
 
-            /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 getSupportActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu();
             }
         };
 
-        // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -87,6 +85,7 @@ public class MainActivity extends ActionBarActivity {
 
         mFragments = new Fragment[mTitles.length];
         mFragments[0] = new ExploreFragment();
+        mFragments[1] = new MyDiscoveriesFragment();
 
         if (savedInstanceState == null)
             selectItem(1);
@@ -107,7 +106,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
+
         mDrawerToggle.syncState();
     }
 
@@ -132,6 +131,10 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public Authentication getAuthentication() {
+        return mAuthentication;
+    }
+
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
@@ -143,18 +146,14 @@ public class MainActivity extends ActionBarActivity {
      * Swaps fragments in the main content view
      */
     private void selectItem(int position) {
-
-        // Create a new fragment and specify the planet to show based on position
         if (position != 0 && position != mCurrentPosition) {
             mCurrentPosition = position;
 
-            // Insert the fragment by replacing any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_fragment, mFragments[0])
+                    .replace(R.id.content_fragment, mFragments[position  - 1])
                     .commit();
 
-            // Highlight the selected item, update the title, and close the drawer
             mDrawerList.setItemChecked(position, true);
             setTitle(mTitles[position - 1]);
         }

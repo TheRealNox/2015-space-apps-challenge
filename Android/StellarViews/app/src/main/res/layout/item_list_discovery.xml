@@ -15,8 +15,8 @@
 
             <ImageView
                 android:id="@+id/like"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:gravity="center"
                 android:layout_margin="40dp"
                 android:src="@mipmap/ic_flame"
@@ -31,15 +31,12 @@
 
             <ImageView
                 android:id="@+id/dislike"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:gravity="center"
                 android:src="@mipmap/ic_cross"
                 android:visibility="invisible"
-                android:layout_margin="40dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_margin="50dp"/>
 
         </RelativeLayout>
     </LinearLayout>
@@ -69,14 +66,16 @@
             android:layout_alignParentStart="true">
 
             <TextView
+                android:id="@+id/discovery_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Volcan choc"
                 android:gravity="center"
                 android:padding="5dp"
                 android:textColor="@android:color/white"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentTop="true" />
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"/>
         </RelativeLayout>
     </RelativeLayout>
 

@@ -5,5 +5,10 @@
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open Navigation Drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="ok">Ok</string>
+    <string name="something_went_wrong">Something went wrong, please try again.</string>
+    <string name="come_again">Thank you for helping NASA to sort interesting discoveries !\n\nCome again tomorrow for more exinting pictures !</string>
+    <string name="copyright">2015 - StellarViews</string>
+    <string name="invalid_email_format">Invalid email format.</string>
 
 </resources>

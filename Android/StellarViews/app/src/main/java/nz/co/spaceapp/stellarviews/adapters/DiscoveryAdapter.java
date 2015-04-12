@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -29,12 +30,14 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView discoveryData;
         public SquareNetworkImageView discovery;
 
         public ViewHolder(View v) {
             super(v);
 
             discovery = (SquareNetworkImageView) v.findViewById(R.id.discovery);
+            discoveryData = (TextView) v.findViewById(R.id.discovery_date);
         }
     }
 
@@ -55,8 +58,9 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.View
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
         final Discovery discovery = mDiscoveries.get(position);
 
-        viewHolder.discovery.setDefaultImageResId(R.mipmap.default_discovery);
+        viewHolder.discovery.setDefaultImageResId(R.mipmap.ic_space_app_challenge_greyscale);
         viewHolder.discovery.setImageUrl(discovery.getUrl(), ImageManager.getInstance().getImageLoader());
+        viewHolder.discoveryData.setText(discovery.getCreatedTaken().substring(0, 10));
     }
 
     @Override

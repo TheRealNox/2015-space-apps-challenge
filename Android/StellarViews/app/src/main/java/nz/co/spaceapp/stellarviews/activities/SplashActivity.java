@@ -34,25 +34,30 @@ public class SplashActivity extends ActionBarActivity {
 
     private static final String TAG = SplashActivity.class.getSimpleName();
     private Authentication mAuthentication;
+    private View mErrorMessage;
+    private View mLoader;
+    private View mLogo;
+    private boolean mCanRequest = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spash);
 
-        View loader = findViewById(R.id.loader_ring);
-
-        loader.animate().rotation(30).start();
-        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.loading_ring);
-        loader.startAnimation(rotation);
+        mLoader = findViewById(R.id.loader_ring);
+        mLogo = findViewById(R.id.space_app_logo);
 
         SharedPreferencesManager.getInstance().initialize(SplashActivity.this);
         RequestManager.getInstance().initialize(SplashActivity.this);
         ImageManager.getInstance().initialize(SplashActivity.this, getSupportFragmentManager(), 0.5f);
 
         mAuthentication = SharedPreferencesManager.getInstance().getAuthenticationInfo();
+        mErrorMessage = findViewById(R.id.something_wrong);
 
         if (!mAuthentication.isValid()) {
+            Animation rotation = AnimationUtils.loadAnimation(this, R.anim.loading_ring);
+            mLoader.startAnimation(rotation);
+
             Handler h = new Handler();
             h.postDelayed(new Runnable() {
                 @Override
@@ -66,11 +71,23 @@ public class SplashActivity extends ActionBarActivity {
             return;
         }
 
-        requestLogin();
+        mLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCanRequest)
+                    requestDiscoveries();
+            }
+        });
+        requestDiscoveries();
     }
 
-    private void requestLogin() {
-        GetRequest request = new GetRequest(RequestConstants.BASE_URL + RequestConstants.DISCOVERIES_URL + "?auth_token=" + mAuthentication.getAccessToken(), new Response.ErrorListener() {
+    private void requestDiscoveries() {
+        mLoader.animate().rotation(30).start();
+        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.loading_ring);
+        mLoader.startAnimation(rotation);
+        mErrorMessage.setVisibility(View.GONE);
+
+        GetRequest request = new GetRequest(RequestConstants.BASE_URL + RequestConstants.DISCOVERIES_URL + mAuthentication.getAccessToken(), new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "error while fetching discoveries");
@@ -85,6 +102,7 @@ public class SplashActivity extends ActionBarActivity {
                     boolean success = (Boolean) object.get(RequestConstants.SUCCESS);
 
                     if (success) {
+                        mCanRequest = false;
                         Handler h = new Handler();
                         h.postDelayed(new Runnable() {
                             @Override
@@ -119,6 +137,8 @@ public class SplashActivity extends ActionBarActivity {
     }
 
     private void handleError(VolleyError error) {
-
+        mErrorMessage.setVisibility(View.VISIBLE);
+        mLoader.getAnimation().cancel();
+        mCanRequest = true;
     }
 }

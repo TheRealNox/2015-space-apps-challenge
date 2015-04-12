@@ -21,14 +21,24 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:elevation="5dp"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/content_fragment"
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-        </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/copyright"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
 
     </FrameLayout>
 

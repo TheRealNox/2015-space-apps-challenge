@@ -2,7 +2,6 @@
 <resources>
     <string-array name="drawer_menu">
         <item>Explore</item>
-        <item>My likes</item>
-        <item>Settings</item>
+        <item>My Discoveries</item>
     </string-array>
 </resources>

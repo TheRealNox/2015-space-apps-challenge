@@ -147,6 +147,8 @@ public class SwipeTouchListenerRecyclerView implements View.OnTouchListener {
                                 .setListener(new AnimatorListenerAdapter() {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
+                                        if (mCallback != null)
+                                            mCallback.willBeDismiss();
                                         performDismiss(itemView, swipeView, itemPosition);
                                     }
                                 });
@@ -313,5 +315,6 @@ public class SwipeTouchListenerRecyclerView implements View.OnTouchListener {
 
     public interface DismissCallback {
         void onDismiss(RecyclerView recyclerView, int[] position);
+        void willBeDismiss();
     }
 }

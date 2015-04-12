@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/swipe_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/drop_shadow_image_view"
+        android:visibility="visible">
+
+        <nz.co.spaceapp.library.view.SquareNetworkImageView
+            android:id="@+id/discovery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:paddingBottom="1dp"
+            android:contentDescription="@null"/>
+    </RelativeLayout>
+
+</FrameLayout>

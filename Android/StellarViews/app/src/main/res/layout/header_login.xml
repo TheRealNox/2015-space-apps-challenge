@@ -12,7 +12,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@mipmap/ic_space_app_challenge.png"
+            android:src="@mipmap/ic_space_app_challenge"
             android:layout_margin="5dp"
             android:contentDescription="@null"/>
 

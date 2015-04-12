@@ -21,12 +21,6 @@ public class Discovery implements Parcelable {
     @SerializedName("id")
     private int mId;
 
-    @SerializedName("image_collection_id")
-    private int mCollectionId;
-
-    @SerializedName("uuid")
-    private String mUuid;
-
     @SerializedName("unique_key")
     private String mUniqueKey;
 
@@ -39,6 +33,9 @@ public class Discovery implements Parcelable {
     @SerializedName("url")
     private String mUrl;
 
+    @SerializedName("image_detail_id")
+    private String mImageDetailId;
+
     public Discovery() {
     }
 
@@ -50,12 +47,11 @@ public class Discovery implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(mId);
-        dest.writeInt(mCollectionId);
         dest.writeString(mUniqueKey);
         dest.writeString(mDateModified);
         dest.writeString(mDateTaken);
         dest.writeString(mUrl);
-        dest.writeString(mUuid);
+        dest.writeString(mImageDetailId);
     }
 
     public static final Parcelable.Creator<Discovery> CREATOR = new Parcelable.Creator<Discovery>() {
@@ -70,12 +66,11 @@ public class Discovery implements Parcelable {
 
     private Discovery(Parcel in) {
         mId = in.readInt();
-        mCollectionId = in.readInt();
         mUniqueKey = in.readString();
         mDateModified = in.readString();
         mDateTaken = in.readString();
         mUrl = in.readString();
-        mUuid = in.readString();
+        mImageDetailId = in.readString();
     }
 
     public static Type getArrayType() {
@@ -84,5 +79,17 @@ public class Discovery implements Parcelable {
 
     public String getUrl() {
         return mUrl;
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public String getCreatedTaken() {
+        return mDateTaken;
+    }
+
+    public String getImageDetailId() {
+        return mImageDetailId;
     }
 }
