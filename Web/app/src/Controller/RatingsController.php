@@ -57,22 +57,27 @@ class RatingsController extends AppController
             $data = json_decode($data);
         }
 
+        var_dump($data);
+
         if (is_array($data)) {
             foreach ($data as $rating) {
+                var_dump($rating);
                 $rating = (array)$rating;
                 if (!isset($rating['image_id'], $rating['is_interesting'])) {
+                    echo "notset";
                     continue;
                 }
                 if (!in_array($rating['image_id'], $imageIds) && $rating['is_interesting']) {
                     $imageIds[] = $rating['image_id'];
                 }
                 $rating['user_id'] = $this->ApiAuth->user('id');
-                $newRating = $this->Ratings->newEntity();
-                $newRating = $this->Ratings->patchEntity($newRating, $rating);
+                $newRating = $this->Ratings->newEntity($rating);
                 $rErrors = (array)$newRating->errors();
                 if ($rErrors) {
+                    echo '__error__';
                     $errors[] = $rErrors;
                 } else {
+                    echo '__noerror__';
                     if ($this->Ratings->save($rating)) {
                         $rows_saved++;
                     }
