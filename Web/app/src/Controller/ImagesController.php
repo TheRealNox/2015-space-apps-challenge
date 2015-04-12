@@ -14,10 +14,15 @@ class ImagesController extends AppController
     /**
      * Index method
      *
+     * @!param int $image_detail_id
+     * @!param int $limit
+     * @!param string $exclude
+     * @!param bool $exclude_rated
      * @return void
      */
     public function index()
     {
+        $imageDetailId = (int)$this->request->param('image_detail_id');
         $limit = (int)$this->request->param('limit');
         if (!$limit || $limit > 100 || $limit < 1) {
             $limit = 20;
@@ -26,8 +31,16 @@ class ImagesController extends AppController
         if (!is_array($exclude)) {
             $exclude = [];
         }
+        $exclude_rated = (string)$this->request->param('exclude_rated');
+        if (strlen($exclude_rated) > 0 && !$exclude_rated) {
+            $exclude_rated = false;
+        } else {
+            $exclude_rated = true;
+        }
 
-        $excludeIds = $this->Images->Ratings->getImageIdsByUserId($this->ApiAuth->user('id'));
+        if ($exclude_rated) {
+            $excludeIds = $this->Images->Ratings->getImageIdsByUserId($this->ApiAuth->user('id'));
+        }
 
         foreach ($exclude as $id) {
             $id = intval($id);
@@ -37,6 +50,9 @@ class ImagesController extends AppController
         }
 
         $conditions = [];
+        if ($imageDetailId) {
+            $conditions['Images.image_detail_id'] = $imageDetailId;
+        }
         if ($excludeIds) {
             $conditions['Images.id NOT IN'] = $excludeIds;
         }
