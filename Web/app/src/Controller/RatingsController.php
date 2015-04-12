@@ -33,8 +33,10 @@ class RatingsController extends AppController
             $this->Ratings->Images->addExtra($rating->image);
         }
 
-        $this->set(compact('ratings'));
-        $this->set('_serialize', ['ratings']);
+        $success = true;
+
+        $this->set(compact('ratings', 'success'));
+        $this->set('_serialize', ['ratings', 'success']);
     }
 
     /**
