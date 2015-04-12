@@ -57,10 +57,11 @@ Router::scope('/api', function ($routes) {
 
     $routes->resources('Users', [
         'only' => ['register', 'login'],
-        'actions' => [
-            'add' => 'register'
-        ],
         'map' => [
+            'register' => [
+                'action' => 'register',
+                'method' => 'POST'
+            ],
             'login' => [
                 'action' => 'login',
                 'method' => 'POST'
