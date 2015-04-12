@@ -88,7 +88,7 @@ class ImagesController extends AppController
             ->find(
                 'all', [
                     'conditions' => [
-                        'image_id' => $image_id
+                        'Images.id' => $image_id
                     ],
                     'contain' => ['ImageDetails']
                 ]
@@ -109,6 +109,7 @@ class ImagesController extends AppController
 
                 $imgObj = new \stdClass();
                 $imgObj->url = $this->Images->generateUrl($dateTaken, $tileX, $tileY);
+                $imgObj->date_taken = (string)$dateTaken;
 
                 $images[] = $imgObj;
             }

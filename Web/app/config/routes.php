@@ -88,7 +88,7 @@ Router::scope('/api', function ($routes) {
     ]);
 
     $routes->resources('Images', [
-        'only' => ['index'],
+        'only' => ['index', 'get_previous'],
         'map' => [
             'index' => [
                 'action' => 'index',
