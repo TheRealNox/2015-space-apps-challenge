@@ -73,7 +73,7 @@ Router::scope('/api', function ($routes) {
     ]);
 
     $routes->resources('Ratings', [
-        'only' => ['add', 'index']
+        'only' => ['index', 'create']
     ]);
 
     $routes->resources('Images', [
