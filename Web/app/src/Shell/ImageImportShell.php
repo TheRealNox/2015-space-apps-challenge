@@ -9,7 +9,6 @@ use Cake\ORM\TableRegistry;
 
 use SocalNick\Orchestrate\Client;
 use SocalNick\Orchestrate\SearchOperation;
-use Mills\GooglePlaces\googlePlaces;
 
 class ImageImportShell extends Shell
 {
@@ -19,7 +18,7 @@ class ImageImportShell extends Shell
     public function main()
     {
         $client = new Client(Configure::read('Orchestrate.api_key'));
-        $googlePlaces = new googlePlaces(Configure::read('GooglePlaces.api_key'));
+        $geocodeUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s";
         $images = TableRegistry::get('Images');
 
         if (self::LOG_QUERIES) {
@@ -46,12 +45,16 @@ class ImageImportShell extends Shell
 
                 $lat = $result['value']['TileCoordinates']['TopLatitude'];
                 $long = $result['value']['TileCoordinates']['TopLongitude'];
-                $googlePlaces->setLocation($lat. ',' . $long);
-                $googlePlaces->setRadius(5000);
-                $places = $googlePlaces->Search();
 
-                var_dump($places);
-                die;
+                $ch = curl_init(sprintf($geocodeUrl, $lat, $long));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $geocode = @json_decode(curl_exec($ch));
+                curl_close($ch);
+                $locationName = null;
+                if ($geocode->results) {
+                    $location = array_shift($geocode->results);
+                    $locationName = $location->formatted_address;
+                }
 
                 $data = [
                     'image_collection_id' => (int)array_search($result['value']['Category'], $collections, true),
