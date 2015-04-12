@@ -63,7 +63,3 @@ void						Controller::getFireTileRequest(GetFireTileRequest * toAdd)
 	this->sendTaskToModel(new Task<GetFireTileRequest *>((RequestMask | FireTileRequest), toAdd));
 }
 
-
-//
-//Triggered from Model
-//

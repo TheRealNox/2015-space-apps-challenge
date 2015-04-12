@@ -22,6 +22,9 @@
 #include <QBuffer>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <qmath.h>
 #include "Controller.h"
 
 #define TILE_WIDTH 512.f
@@ -44,11 +47,15 @@ public:
 	StellarViewsFinder(QWidget *parent = 0);
 	~StellarViewsFinder();
 
+private:
+	void						updateView();
+
 public:
 	void						plugController(Controller *);
 
 public slots:
 	void						buttonClicked();
+	void						sliderChanged(int);
 
 public:
 signals :

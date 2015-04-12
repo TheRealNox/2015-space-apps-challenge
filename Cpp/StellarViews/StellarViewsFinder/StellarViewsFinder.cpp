@@ -14,7 +14,11 @@ StellarViewsFinder::StellarViewsFinder(QWidget *parent)
 	this->_bottom.lon = -180.f + STEP;
 	this->_tile.x = 0;
 	this->_tile.y = 0;
+	this->_ui.zoomSlider->setMinimum(0);
+	this->_ui.zoomSlider->setMaximum(500);
+	this->_ui.zoomSlider->setValue(250);
 	connect(this->_ui.getTileButton, SIGNAL(clicked()), this, SLOT(buttonClicked()));
+	connect(this->_ui.zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderChanged(int)));
 
 }
 
@@ -26,31 +30,17 @@ StellarViewsFinder::~StellarViewsFinder()
 void				StellarViewsFinder::plugController(Controller * control)
 {
 	connect(this, SIGNAL(newGetFireTileRequestReady(GetFireTileRequest*)), control, SLOT(getFireTileRequest(GetFireTileRequest *)));
-	//this->_ui.actionUndo->setShortcutContext(Qt::ApplicationShortcut);
-	//this->_ui.actionRedo->setShortcutContext(Qt::ApplicationShortcut);
-
-	//this->addAction(this->_ui.actionUndo);
-	//this->addAction(this->_ui.actionRedo);
-
-	//connect(this->_ui.actionUndo, SIGNAL(triggered()), control, SLOT(undoTriggered()));
-	//connect(this->_ui.actionRedo, SIGNAL(triggered()), control, SLOT(redoTriggered()));
 }
 
 void					StellarViewsFinder::buttonClicked()
 {
+	QGraphicsScene *scene = new QGraphicsScene(0, 0, 320 * 512, 160 * 512, this);
+	this->_ui.graphicsView->setScene(scene);
+	this->_ui.graphicsView->setSceneRect(0, 0, 320 * 512, 160 * 512);
+
 	bool				run = true;
 	while (run)
 	{
-		//MODIS_Terra_CorrectedReflectance_TrueColor
-		//https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=2015-04-08&Layer=MODIS_Fires_All&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.1.0&Format=image%2Fjpeg&TileMatrix=7&TileCol=0&TileRow=16
-		//https://map1c.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=2015-02-08&Layer=MODIS_Aqua_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=319&TileRow=16
-		//https://map1a.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=2015-02-08&Layer=MODIS_Aqua_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=-319&TileRow=-169
-		//https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=2015-02-08&Layer=MODIS_Aqua_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=159&TileRow=79
-		//MODIS_Fires_All
-		//https://map2b.vis.earthdata.nasa.gov/wms/wms.php?TIME=2015-02-11&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=MODIS_Fires_All&WIDTH=512&HEIGHT=512&SRS=EPSG%3A4326&STYLES=&BBOX=149.625%2C-29.25%2C150.75%2C-28.125
-		//https://map2c.vis.earthdata.nasa.gov/wms/wms.php?TIME=2015-02-11&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=MODIS_Fires_All&WIDTH=512&HEIGHT=512&SRS=EPSG%3A4326&STYLES=&BBOX=173.25%2C-82.125%2C174.375%2C-81
-		//https://map2b.vis.earthdata.nasa.gov/wms/wms.php?TIME=2015-01-19&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=MODIS_Fires_All&WIDTH=512&HEIGHT=512&SRS=EPSG%3A4326&STYLES=&BBOX=189%2C90%2C198%2C99
-
 		QString request("http://map2a.vis.earthdata.nasa.gov/wms/wms.php?TIME=");
 		QDate current = QDate::currentDate();
 		current = current.addDays(-1);
@@ -65,9 +55,12 @@ void					StellarViewsFinder::buttonClicked()
 		request.append(QString::number(this->_bottom.lon));
 		QUrl url(request);
 		QNetworkRequest * nRequest = new QNetworkRequest(url);
-		GetFireTileRequest *fireRequest = new GetFireTileRequest(nRequest);
-		fireRequest->setData(this->_top, this->_bottom, this->_tile);
+		GetFireTileRequest *fireRequest = new GetFireTileRequest(nRequest, this->_ui.apiKey->text());
+		((Request*)fireRequest)->setData(this->_top, this->_bottom, this->_tile);
 		emit this->newGetFireTileRequestReady(fireRequest);
+//		fireRequest->setPos(this->_tile.y * 512, this->_tile.x * 512);
+		fireRequest->setAutoDelete(true);
+//		scene->addItem(fireRequest);
 		QCoreApplication::processEvents();
 		this->_id += 1;
 		this->_tile.x += 1;
@@ -85,4 +78,76 @@ void					StellarViewsFinder::buttonClicked()
 				run = false;
 		}
 	}
+	this->updateView();
+}
+
+void					StellarViewsFinder::sliderChanged(int value)
+{
+	qreal scale = qPow(qreal(2), (value - 500) / qreal(50));
+	if (scale < 0.00333333f)
+		scale = 0.003333333f;
+
+	QMatrix matrix;
+	matrix.scale(scale, scale);
+	this->_ui.graphicsView->setMatrix(matrix);
+}
+
+void					StellarViewsFinder::updateView()
+{
+	QGraphicsScene *scene = new QGraphicsScene(0, 0, 320 * 512, 160 * 512, this);
+	this->_ui.graphicsView->setScene(scene);
+	this->_ui.graphicsView->setSceneRect(0, 0, 320 * 512, 160 * 512);
+
+		// Populate scene
+	int nitems = 0;
+	for (int i = 0; i < 320; i += 1)
+	{
+		for (int j = 0; j < 160; j += 1)
+		{
+			QString request("https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=");
+			QDate current = QDate::currentDate();
+			current = current.addDays(-1);
+			request.append(current.toString("yyyy-MM-dd"));
+			request.append("&Layer=MODIS_Terra_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=");
+			request.append(QString::number(i));
+			request.append("&TileRow=");
+			request.append(QString::number(j));
+			QUrl url(request);
+			QNetworkRequest nRequest(url);
+			QNetworkAccessManager nam;
+			bool			useFull = false;
+
+			QNetworkReply* reply = nam.get(nRequest);
+			QEventLoop eventLoop;
+			QObject::connect(reply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+			eventLoop.exec();
+			QVariant statusCodeV =
+				reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+
+			// Or the target URL if it was a redirect:
+			QVariant redirectionTargetUrl =
+				reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+
+			// no error received?
+			if (reply->error() == QNetworkReply::NoError)
+			{
+				// read data from QNetworkReply here
+				QByteArray bytes = reply->readAll();  // bytes
+				QPixmap * pixmap = new QPixmap;
+				pixmap->loadFromData(bytes);
+				QGraphicsPixmapItem  *item = new QGraphicsPixmapItem(*pixmap);
+				item->setPos(i * 512, j * 512);
+				scene->addItem(item);
+				delete pixmap;
+				delete reply;
+			}
+			// Some http error received
+			else
+			{
+				qDebug() << "Request error: " << reply->errorString();
+			}
+			++nitems;
+		}
+	}
+	delete scene;
 }

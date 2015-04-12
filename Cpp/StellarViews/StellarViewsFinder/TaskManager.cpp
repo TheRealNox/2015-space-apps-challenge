@@ -84,7 +84,6 @@ BaseTask*				TaskManager::getFireTileRequest(BaseTask* base)
 {
 	Task<GetFireTileRequest*> * task = (Task<GetFireTileRequest*>*)base;
 	GetFireTileRequest * request = task->getArg();
-
 	QThreadPool::globalInstance()->start((QRunnable*)request);
 
 	return base;

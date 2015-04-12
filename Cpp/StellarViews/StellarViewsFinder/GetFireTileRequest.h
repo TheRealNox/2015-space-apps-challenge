@@ -7,44 +7,29 @@
 
 #include "Request.h"
 
-struct			LatLonCoord
-{
-	float		lat;
-	float		lon;
-};
-
-struct			Tile
-{
-	int			x;
-	int			y;
-};
+#define COLOUR_WEIGHT (150*250)
 
 class						GetFireTileRequest : public Request
 {
 	Q_OBJECT
 
 private:
-	LatLonCoord				_topLeftCorner;
-	LatLonCoord				_bottomRightCorner;
-	Tile					_current;
+
 
 public:
-	GetFireTileRequest(QNetworkRequest * request = NULL);
+	GetFireTileRequest(QNetworkRequest * request = NULL, QString = 0);
 	GetFireTileRequest(const GetFireTileRequest &request);
 	~GetFireTileRequest();
 
 public:
 	void					run();
-	
-public:
-	LatLonCoord				getTop() const;
-	LatLonCoord				getBottom() const;
-	Tile					getTile() const;
-
-	void					setData(LatLonCoord top, LatLonCoord bottom, Tile current);
 
 private:
-	void					pushToServer();
+
+public slots :
+	void					downloadProgress(qint64 read, qint64 total);
+	void					handleReply(QNetworkReply * reply);
+
 };
 
 Q_DECLARE_METATYPE(GetFireTileRequest);
