@@ -40,7 +40,7 @@ class ImagesController extends AppController
 
         $conditions = [];
         if ($excludeIds) {
-            $conditions['id NOT IN'] = $excludeIds;
+            $conditions['Image.id NOT IN'] = $excludeIds;
         }
 
         $images = $this->Images->find(
