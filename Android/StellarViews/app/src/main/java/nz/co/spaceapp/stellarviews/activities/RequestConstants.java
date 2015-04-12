@@ -12,10 +12,11 @@ public class RequestConstants {
     public static final String PASSWORD = "password";
     public static final String DISCOVERIES_URL = "api/images/index.json?auth_token=";
     public static final String DISCOVERY_URL = "api/images/index.json?auth_token=";
+    public static final String PREVIOUS_URL = "api/images/get_previous.json?auth_token=";
     public static final String IMAGES = "images";
     public static final String LOGIN_URL = "api/users/login.json";
     public static final String RATE_URL = "api/ratings/add.json";
-    public static final String RATINGS_URL = "api/ratings/index.json?auth_token=";
+    public static final String RATINGS_URL = "api/ratings/index.json?is_interesting=1&auth_token=";
     public static final String DISCOVERY_ID = "ratings";
     public static final String ERRORS = "errors";
     public static final String RATINGS = "ratings";

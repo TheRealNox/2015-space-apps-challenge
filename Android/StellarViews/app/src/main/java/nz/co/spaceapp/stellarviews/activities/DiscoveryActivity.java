@@ -65,11 +65,11 @@ public class DiscoveryActivity extends ActionBarActivity {
     }
 
     private void requestMyDiscoveries() {
-        GetRequest request = new GetRequest(RequestConstants.BASE_URL + RequestConstants.DISCOVERY_URL + mAuthentication.getAccessToken() + "&limit=5&exclude=" + mDiscovery.getId() + "&image_detail_id=" + mDiscovery.getImageDetailId(), new Response.ErrorListener() {
+        GetRequest request = new GetRequest(RequestConstants.BASE_URL + RequestConstants.PREVIOUS_URL + mAuthentication.getAccessToken() + "&limit=5&image_id=" + mDiscovery.getId(), new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Error liking");
+                Log.e(TAG, "Error fetching previous imagerie");
             }
         }, new Response.Listener<String>() {
             @Override
@@ -91,7 +91,6 @@ public class DiscoveryActivity extends ActionBarActivity {
                                     mDiscoveries.clear();
                                     mDiscoveries.add(mDiscovery);
                                     mDiscoveries.addAll(gson.<Collection<? extends Discovery>>fromJson(object.getJSONArray(RequestConstants.IMAGES).toString(), Discovery.getArrayType()));
-                                    Collections.reverse(mDiscoveries);
 
                                     mPagerAdapter.notifyDataSetChanged();
                                 } catch (JSONException e) {
