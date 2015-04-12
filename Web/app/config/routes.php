@@ -88,7 +88,13 @@ Router::scope('/api', function ($routes) {
     ]);
 
     $routes->resources('Images', [
-        'only' => ['index']
+        'only' => ['index'],
+        'map' => [
+            'index' => [
+                'action' => 'index',
+                'method' => 'GET'
+            ],
+        ]
     ]);
 });
 
