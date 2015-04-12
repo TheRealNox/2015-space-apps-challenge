@@ -67,20 +67,15 @@ class RatingsController extends AppController
                     $imageIds[] = $rating['image_id'];
                 }
                 $rating['user_id'] = $this->ApiAuth->user('id');
-                $newRating = $this->Ratings->newEntity();
-                $newRating = $this->Ratings->patchEntity($newRating, $rating);
-                var_dump($newRating);
-                if (!is_object($newRating)) {
-                    die();
-                }
+                $newRating = $this->Ratings->newEntity($rating);
                 $rErrors = (array)$newRating->errors();
                 if ($rErrors) {
-                    var_dump($rErrors);
                     $errors[] = $rErrors;
                 } else {
-                    echo '__noerror__';
-                    if ($this->Ratings->save($rating)) {
+                    if ($this->Ratings->save($newRating)) {
                         $rows_saved++;
+                    } else {
+                        $errors[] = (array)$newRating->errors();
                     }
                 }
             }
