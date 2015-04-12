@@ -50,7 +50,7 @@ Logs a user in. Supplies an auth_token which can be used in subsequent requests.
 ``
 
 ### ratings
-``GET /api/users/login``
+``GET /api/ratings/index``
 
 Shows all ratings for the logged in user.
 
@@ -95,8 +95,8 @@ Recieves auth_token and Image ID to update number of likes
 }
 ``
 
-### images
-``GET /api/images?auth_token={auth-token}``
+### images/index
+``GET /api/images/index``
 
 Returns Images from data supplied by Orchestrate, Amount is determined by available data.
 
@@ -121,5 +121,39 @@ Returns Images from data supplied by Orchestrate, Amount is determined by availa
             "url": "https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=2015-03-10&Layer=MODIS_Terra_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=125&TileRow=26"
         }
     ]
+}
+``
+
+### images/get_previous
+``GET /api/images/get_previous?auth_token={auth-token}``
+
+Returns Images from data supplied by Orchestrate, Amount is determined by available data.
+
+**Parameters:**
+- image_id
+- limit
+
+**Returns:**
+
+``
+{
+    "images": [
+        {
+            "url": "https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=2015-03-10&Layer=MODIS_Terra_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=125&TileRow=26"
+        },
+        {
+            "url": "https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=2015-03-10&Layer=MODIS_Terra_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=125&TileRow=26"
+        },
+        {
+            "url": "https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=2015-03-10&Layer=MODIS_Terra_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=125&TileRow=26"
+        },
+        {
+            "url": "https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=2015-03-10&Layer=MODIS_Terra_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=125&TileRow=26"
+        },
+        {
+            "url": "https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=2015-03-10&Layer=MODIS_Terra_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=125&TileRow=26"
+        }
+    ],
+    "success": true
 }
 ``
