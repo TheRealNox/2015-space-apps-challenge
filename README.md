@@ -10,7 +10,7 @@ Via an invitation to register and login, people are able to like any satellite i
 
 ###Android
 
-
+![Splash Screen](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165449.png) ![Discovery Feed](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165521.png) ![My Discoveries](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165544.png)
 
 ___
 
