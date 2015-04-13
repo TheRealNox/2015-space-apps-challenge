@@ -46,11 +46,11 @@ void					StellarViewsFinder::buttonClicked()
 		current = current.addDays(-1);
 		request.append(current.toString("yyyy-MM-dd"));
 		request.append("&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=MODIS_Fires_All&WIDTH=512&HEIGHT=512&SRS=EPSG%3A4326&STYLES=&BBOX=");
-		request.append(QString::number(this->_top.lat));
+		request.append(QString::number(this->_bottom.lat));
 		request.append("%2C");
 		request.append(QString::number(this->_top.lon));
 		request.append("%2C");
-		request.append(QString::number(this->_bottom.lat));
+		request.append(QString::number(this->_top.lat));
 		request.append("%2C");
 		request.append(QString::number(this->_bottom.lon));
 		QUrl url(request);
@@ -106,7 +106,7 @@ void					StellarViewsFinder::updateView()
 		{
 			QString request("https://map1b.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi?TIME=");
 			QDate current = QDate::currentDate();
-			current = current.addDays(-1);
+			current = current.addDays(-2);
 			request.append(current.toString("yyyy-MM-dd"));
 			request.append("&Layer=MODIS_Terra_CorrectedReflectance_TrueColor&TileMatrixSet=EPSG4326_250m&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=8&TileCol=");
 			request.append(QString::number(i));

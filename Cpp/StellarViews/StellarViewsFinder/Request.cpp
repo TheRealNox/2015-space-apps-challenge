@@ -98,6 +98,7 @@ void				Request::pushToServer()
 
 	if (reply->error() == QNetworkReply::NoError)
 	{
+		qDebug() << "Send value:" << this->_current.y << ":" << this->_current.x;
 		qDebug() << "Answer from server:" << reply->rawHeader("X-ORCHESTRATE-REQ-ID");
 	}
 }

@@ -26,7 +26,7 @@ void				GetFireTileRequest::run()
 	autoKill.setSingleShot(true);
 	QObject::connect(&autoKill, SIGNAL(timeout()), &daLoop, SLOT(quit()));
 	QNetworkReply* reply = this->_nam->get(*this->_request);
-	//autoKill.start(5000);
+	autoKill.start(10000);
 	QObject::connect(reply, SIGNAL(downloadProgress(qint64, qint64)), this, SLOT(downloadProgress(qint64, qint64)));
 	QObject::connect(reply, SIGNAL(finished()), &daLoop, SLOT(quit()));
 	daLoop.exec();
@@ -61,8 +61,10 @@ void					GetFireTileRequest::handleReply(QNetworkReply * reply)
 
 		//path.append(name);
 
-		qDebug() << " x1=" << this->_current.x << " x2=" << this->_current.y;
 		int colourWeight = 0;
+		
+		qDebug() << "x:" << this->_current.x << "y:" << this->_current.y;
+
 		for (int i = 0; i < image.byteCount(); i++)
 		{
 			if (image.constBits()[i] != '\0')
