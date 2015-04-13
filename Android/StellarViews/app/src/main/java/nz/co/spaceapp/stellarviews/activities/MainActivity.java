@@ -78,10 +78,9 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        setupHeader();
         mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mTitles));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-        setupHeader();
 
         mFragments = new Fragment[mTitles.length];
         mFragments[0] = new ExploreFragment();

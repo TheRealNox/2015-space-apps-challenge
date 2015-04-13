@@ -8,9 +8,9 @@ StellarViewsFinder::StellarViewsFinder(QWidget *parent)
 	this->_ui.setupUi(this);
 
 	this->_id = 0;
-	this->_top.lat = -90.f;
+	this->_top.lat = 90.f;
 	this->_top.lon = -180.f;
-	this->_bottom.lat = -90.f + STEP;
+	this->_bottom.lat = 90.f - STEP;
 	this->_bottom.lon = -180.f + STEP;
 	this->_tile.x = 0;
 	this->_tile.y = 0;
@@ -64,14 +64,14 @@ void					StellarViewsFinder::buttonClicked()
 		QCoreApplication::processEvents();
 		this->_id += 1;
 		this->_tile.x += 1;
-		this->_top.lat += STEP;
-		this->_bottom.lat += STEP;
+		this->_top.lat -= STEP;
+		this->_bottom.lat -= STEP;
 		if (this->_tile.x >= 160)
 		{
 			this->_tile.x = 0;
 			this->_tile.y += 1;
-			this->_top.lat = -90.f;
-			this->_bottom.lat = -90.f + STEP;
+			this->_top.lat = 90.f;
+			this->_bottom.lat = 90.f - STEP;
 			this->_top.lon += STEP;
 			this->_bottom.lon = this->_top.lon + STEP;
 			if (this->_tile.y >= 320)

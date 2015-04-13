@@ -2,7 +2,9 @@
 
 ## __Project Description__
 
-This project is an Android application allowing users to visualize earth imagery taken from NASA's Global Imagery Browse Service (GIBS), in order to allow crowd voting of interesting images.
+This project aims to solve the [Volcanoes, Icebergs and Cats from space](https://2015.spaceappschallenge.org/challenge/volcanoes-icebergs-and-cats-space/) NASA App challenge.
+
+Our proposed solution is an Android application allowing users to visualize earth imagery taken from NASA's Global Imagery Browse Service (GIBS), in order to allow crowd voting of interesting images.
 
 The goal was to make people help NASA sort thousands of satellite images every day.
 We made an mobile application that allows users to "like" or "dislike" a satellite image with a possiblity of Fire event or any intersting event. 
@@ -43,6 +45,10 @@ ___
 
 
 ###Android
+
+Play Store Link: https://play.google.com/store/apps/details?id=nz.co.spaceapp.stellarviews&hl=en
+
+App Video Link: https://www.youtube.com/watch?v=Y41Y4KYhViI
 
 ![Splash Screen](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165449.png) ![Discovery Feed](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165521.png) ![My Discoveries](https://github.com/TheRealNox/2015-space-apps-challenge/blob/master/Android/StellarViews/screenshots/device-2015-04-12-165544.png)
 
