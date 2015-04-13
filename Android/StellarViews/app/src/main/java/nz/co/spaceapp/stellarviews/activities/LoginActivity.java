@@ -77,7 +77,7 @@ public class LoginActivity extends ActionBarActivity {
 
     private void requestLogin() {
         HttpPostParams params = new HttpPostParams();
-        mProgressDialog = ProgressDialog.show(LoginActivity.this, "", "Login you in ...", true);
+        mProgressDialog = ProgressDialog.show(LoginActivity.this, "", getResources().getString(R.string.login), true);
 
         mProgressDialog.show();
         params.addParameters(RequestConstants.EMAIL_ADDRESS, mEmailAddress.getText().toString());
